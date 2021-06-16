@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+{% block content %}
+
+<div class="container container-center template-form page-top">
+
+    <h1> Login
+    </h1>
+
+    <form method="POST" action="{{ url_for('login') }}">
+        <div class="mb-3">
+            <label for="username" class="form-label">Username</label>
+            <input type="text" name="username" class="form-control" id="username" minlength="5" maxlength="15"
+                pattern="^[a-zA-Z0-9]{5,15}$">
+        </div>
+        <div class="mb-3">
+            <label for="password" class="form-label">Password</label>
+            <input type="password" name="password" class="form-control" id="password" maxlength="15"
+                pattern="^[a-zA-Z0-9]{5,15}$">
+        </div>
+
+        <button type="submit" class="btn btn-primary">Login</button>
+    </form>
+
+    <div class="mt-3">
+        <p>
+            Don't have an account yet?
+            <a href="{{ url_for('register') }}" class="">Register</a>
+        </p>
+    </div>
+</div>
+
+{% endblock %}

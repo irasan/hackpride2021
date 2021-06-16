@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+{% block content %}
+
+<h3>My Favourites</h3>
+
+<!-- first check if there's any saved items to display -->
+{% if favs|length > 0 %}
+            {% for item in favs %} <br>
+            {{ item.title}}  <br>
+            {{ item.author}} <br>
+            {{ item.category}} <br>
+            {{ item.summary}} <br>
+            {% endfor %}
+
+<!-- if no reviews to display -->
+{% else %}
+<div class="row">
+    <h3>You have no reviews yet. Create one now!</h3>
+</div>
+{% endif %}
+
+{% endblock %}
