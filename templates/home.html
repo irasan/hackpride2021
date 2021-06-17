@@ -1,8 +1,11 @@
 {% extends "base.html" %}
 {% block content %}
 
-    {% for cat in categories %}
-        {{ cat.category_name }}
+    {% for item in books %}
+        {{ item.title}}  <br>
+        {{ item.author}} <br>
+        {{ item.category}} <br>
+        {{ item.summary}} <br>
     {% endfor %}
 
 {% endblock %}

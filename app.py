@@ -20,8 +20,8 @@ mongo = PyMongo(app)
 @app.route("/")
 @app.route("/home")
 def home():
-    categories = mongo.db.categories.find()
-    return render_template("home.html", categories=categories)
+    books = mongo.db.art.find({"category": "books"})
+    return render_template("home.html", books=books)
 
 
 @app.route("/register", methods=["GET", "POST"])
@@ -92,7 +92,7 @@ def profile(username):
             favs = mongo.db.art.find(
                 {"_id": {"$in": favs_list}}).sort([("title", 1)])
             print(favs)
-            
+
             return render_template(
                 "profile.html", favs=favs)
         return redirect(url_for("home"))
@@ -106,6 +106,54 @@ def logout():
     flash("You have been logged out")
     session.pop("user")
     return redirect(url_for("login"))
+
+
+@app.route("/add_art", methods=["GET", "POST"])
+def add_art():
+    categories = list(mongo.db.categories.find().sort(
+                    "category_name", 1))
+    result = {}
+    if "user" in session:
+        is_admin = mongo.db.users.find_one(
+            {"username": session["user"]})["is_admin"]
+        if is_admin:
+            if request.method == "POST":
+                art = {
+                        "title": request.form.get("title").lower(),
+                        "author": request.form.get("author").lower(),
+                        "year": int(request.form.get("year")),
+                        "country": request.form.get("country"),
+                        "category": request.form.get("category_name"),
+                        "is_explicit": request.form.get("is_explicit"),
+                        "summary": request.form.get("summary"),
+                        "website": request.form.get("website"),
+                        "image": request.form.get("cover"),
+                    }
+                # check if cover url is preperly formatted
+                # if not - reload the page but save user's inputs
+                if not request.form.get("cover").endswith(('jpeg', 'png', 'jpg')):
+                    flash("Please enter a valid url!")
+                    result = {
+                        "title": request.form.get("title").lower(),
+                        "author": request.form.get("author"),
+                        "year": int(request.form.get("year")),
+                        "country": request.form.get("country"),
+                        "category": request.form.get("category_name"),
+                        "is_explicit": request.form.get("is_explicit"),
+                        "summary": request.form.get("summary"),
+                        "website": request.form.get("website")
+                    }
+                    return render_template(
+                        "add_art.html", result=result, categories=categories)
+
+                else:
+                    mongo.db.art.insert_one(art)
+                    flash("Your Review Was Successfully Added")
+                    return render_template("home.html")
+        
+        return render_template(
+            "add_art.html", result=result, categories=categories)
+    return render_template("unauthorised_error.html")
 
 
 @app.errorhandler(404)

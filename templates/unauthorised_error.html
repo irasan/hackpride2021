@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+{% block content %}
+
+<h1>Only admin users here!</h1>
+<p>To add, edit or delete art pieces, you need to be an admin</p>
+<div class="mb-3">
+    <!-- login button -->
+    <a href="{{ url_for('login') }}" class="btn-large">
+        Login
+    </a>
+    <!-- register button -->
+    <a href="{{ url_for('register') }}" class="btn-large">
+        Register
+    </a>
+</div>
+
+
+{% endblock %}
