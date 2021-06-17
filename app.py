@@ -20,8 +20,8 @@ mongo = PyMongo(app)
 @app.route("/")
 @app.route("/home")
 def home():
-    books = mongo.db.art.find({"category": "books"})
-    return render_template("home.html", books=books)
+    art = mongo.db.art.find()
+    return render_template("home.html", art=art)
 
 
 @app.route("/register", methods=["GET", "POST"])
@@ -89,8 +89,8 @@ def profile(username):
         if session["user"] == username:
             favs_list = mongo.db.users.find_one(
                 {"username": username})["favorites"]
-            favs = mongo.db.art.find(
-                {"_id": {"$in": favs_list}}).sort([("title", 1)])
+            favs = list(mongo.db.art.find(
+                {"_id": {"$in": favs_list}}).sort([("title", 1)]))
             print(favs)
 
             return render_template(
