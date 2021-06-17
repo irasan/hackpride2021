@@ -1,0 +1,47 @@
+/* GLOBAL SETTINGS */
+.text-shadow {
+    text-shadow: 2px 2px 2px rgba(0, 0, 0, 0.5);
+}
+
+.bold {
+    font-weight: bold;
+}
+
+
+/* AVATARS */
+.avatar {
+    height: 1em;
+    vertical-align: middle;
+}
+
+
+/* FLASH MESSAGES */
+.flashes h4 {
+    line-height: 2;
+    width: 100%;
+}
+
+#flashToast {
+    visibility: hidden;
+    width: 100%;
+    padding: 2em 1em;
+    position: fixed;
+    z-index: 100;
+    top: 4em;
+    font-size: 2em;
+}
+
+#flashToast.show {
+    visibility: visible;
+    animation: flashToast-on 0.5s, flashToast-off 0.5s 3.5s;
+}
+
+@keyframes flashToast-on {
+    from {top: 0; opacity: 0;}
+    to {top: 4em; opacity: 1;}
+}
+
+@keyframes flashToast-off {
+    from {top: 4em; opacity: 1;}
+    to {top: 0; opacity: 0;}
+}

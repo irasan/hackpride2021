@@ -1,4 +1,5 @@
 import os
+from functools import wraps
 from flask import (
     Flask, flash, render_template,
     redirect, request, session, url_for)
@@ -17,92 +18,135 @@ app.secret_key = os.environ.get("SECRET_KEY")
 
 mongo = PyMongo(app)
 
+# @login_required decorator
+# https://flask.palletsprojects.com/en/2.0.x/patterns/viewdecorators/#login-required-decorator
+def login_required(f):
+    @wraps(f)
+    def decorated_function(*args, **kwargs):
+        # no "user" in session
+        if "user" not in session:
+            flash("You must log in to view this page")
+            return redirect(url_for("login"))
+        # user is in session
+        return f(*args, **kwargs)
+    return decorated_function
+
+
 @app.route("/")
 @app.route("/home")
 def home():
-    art = mongo.db.art.find()
+    """
+    The homepage to display a lit of all artwork from the database
+    """
+    art = list(mongo.db.art.find())
     return render_template("home.html", art=art)
 
 
 @app.route("/register", methods=["GET", "POST"])
 def register():
-    if request.method == "POST":
-        # check if username already exists in db
-        existing_user = mongo.db.users.find_one(
-            {"username": request.form.get("username").lower()})
+    if "user" not in session:
+        # only if there isn't a current session["user"]
+        if request.method == "POST":
+            # check if username already exists in db
+            existing_user = mongo.db.users.find_one(
+                {"username": request.form.get("username").lower()})
 
-        if existing_user:
-            flash("Username already exists")
+            if existing_user:
+                flash("Username already exists")
+                return redirect(url_for("register"))
+
+            if request.form.get("password") == request.form.get("password-confirm"):
+                register = {
+                    "username": request.form.get("username").lower(),
+                    "password": generate_password_hash(
+                        request.form.get("password")),
+                    "is_admin": False,
+                    "reviews": [],
+                    "favorites": [],
+                    "avatar": request.form.get("avatar")
+                }
+                mongo.db.users.insert_one(register)
+
+                # put the new user into 'session' cookie
+                session["user"] = request.form.get("username").lower()
+                flash("Registration Successful!")
+                return redirect(url_for("profile", username=session["user"]))
+
+            # passwords don't match each other
+            flash("Passwords must match")
             return redirect(url_for("register"))
 
-        if (request.form.get("password") == request.form.get("password1")):
-            register = {
-                "username": request.form.get("username").lower(),
-                "password": generate_password_hash(
-                    request.form.get("password")),
-                "is_admin": False,
-                "reviews": [],
-                "favorites": [],
-                "avatar": request.form.get("avatar")
-            }
-            mongo.db.users.insert_one(register)
+        # generate the form to register a new user
+        avatars = [
+            "alien", "artist", "astronaut", "basketball-player", "bear",
+            "biker", "boy", "cheerleader", "clown", "cop", "cowboy", "deer",
+            "detective", "dog", "elf", "emo", "eskimo", "fisherman", "fox",
+            "geisha", "girl-1", "girl-2", "hippie", "hipster-boy",
+            "hipster-girl", "husky", "king", "kitten", "knight", "man-1",
+            "man-2", "mermaid", "monkey", "muslim", "penguin", "pilot",
+            "pirate", "princess", "punk-1", "punk-2", "rapper", "robot",
+            "runner", "singer", "spy", "squirrel", "student", "vampire",
+            "viking", "woman"
+        ]
+        return render_template("register.html", avatars=avatars)
 
-        # put the new user into 'session' cookie
-        session["user"] = request.form.get("username").lower()
-        flash("Registration Successful!")
-        return redirect(url_for("profile", username=session["user"]))
-    return render_template("register.html")
+    # user is already logged-in, direct them to their profile
+    return redirect(url_for("profile", username=session["user"]))
 
 
 @app.route("/login", methods=["GET", "POST"])
 def login():
-    if request.method == "POST":
-        # check if username exists in db
-        existing_user = mongo.db.users.find_one(
-            {"username": request.form.get("username").lower()})
+    if "user" not in session:
+        # only if there isn't a current session["user"]
+        if request.method == "POST":
+            # check if username exists in db
+            existing_user = mongo.db.users.find_one(
+                {"username": request.form.get("username").lower()})
 
-        if existing_user:
-            # ensure hashed password matches user input
-            if check_password_hash(
+            if existing_user:
+                # ensure hashed password matches user input
+                if check_password_hash(
                     existing_user["password"], request.form.get("password")):
-                session["user"] = request.form.get("username").lower()
-                flash("Welcome, {}!".format(
-                    request.form.get("username")))
-                return redirect(url_for(
-                    "profile", username=session["user"]))
+                        session["user"] = request.form.get("username").lower()
+                        flash(f"Welcome, {request.form.get('username')}")
+                        return redirect(url_for(
+                            "profile", username=session["user"]))
+                else:
+                    # invalid password match
+                    flash("Incorrect Username and/or Password")
+                    return redirect(url_for("login"))
+
             else:
-                # invalid password match
+                # username doesn't exist
                 flash("Incorrect Username and/or Password")
                 return redirect(url_for("login"))
 
-        else:
-            # username doesn't exist
-            flash("Incorrect Username and/or Password")
-            return redirect(url_for("login"))
+        return render_template("login.html")
 
-    return render_template("login.html")
+    # user is already logged-in, direct them to their profile
+    return redirect(url_for("profile", username=session["user"]))
 
 
 @app.route("/profile/<username>", methods=["GET", "POST"])
+@login_required
 def profile(username):
-    if "user" in session:
-        if session["user"] == username:
-            favs_list = mongo.db.users.find_one(
-                {"username": username})["favorites"]
-            favs = list(mongo.db.art.find(
-                {"_id": {"$in": favs_list}}).sort([("title", 1)]))
-            print(favs)
+    # grab only the session["user"] profile
+    if session["user"].lower() == username.lower():
+        # find the session["user"] record
+        user = mongo.db.users.find_one({"username": username})
+        # grab the user's favorites list
+        favs = list(mongo.db.art.find(
+            {"_id": {"$in": user["favorites"]}}).sort("title", 1))
+        return render_template("profile.html", user=user, favs=favs)
 
-            return render_template(
-                "profile.html", favs=favs)
-        return redirect(url_for("home"))
-
-    return redirect(url_for("login"))
+    # take the incorrect user to their own profile
+    return redirect(url_for("profile", username=session["user"]))
 
 
 @app.route("/logout")
+@login_required
 def logout():
-    # remove user from session cookie
+    # remove user from session cookies
     flash("You have been logged out")
     session.pop("user")
     return redirect(url_for("login"))
@@ -150,7 +194,7 @@ def add_art():
                     mongo.db.art.insert_one(art)
                     flash("Your Review Was Successfully Added")
                     return render_template("home.html")
-        
+
         return render_template(
             "add_art.html", result=result, categories=categories)
     return render_template("unauthorised_error.html")
