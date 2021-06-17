@@ -1,24 +1,29 @@
 {% extends "base.html" %}
 {% block content %}
 
-<h3>My Favourites</h3>
+<h3>
+    <img src="{{ url_for('static', filename='images/avatars/'+user.avatar+'.png') }}" class="avatar"
+        alt="{{ user.avatar }}">
+    {{ user.username }}'s Favourites
+</h3>
 
 <!-- first check if there's any saved items to display -->
 {% if favs|length > 0 %}
-            {% for item in favs %} <br>
-                {{ item.title}}  <br>
-                {{ item.author}} <br>
-                {{ item.category}} <br>
-                {{ item.summary}} <br>
-            {% endfor %}
+
+    {% for item in favs %} <br>
+        {{ item.title}} <br>
+        {{ item.author}} <br>
+        {{ item.category}} <br>
+        {{ item.summary}} <br>
+    {% endfor %}
 
 <!-- if no reviews to display -->
 {% else %}
-<div class="row">
-    <h3>You have no favorites yet. Add one now!</h3>
-    <a href="{{ url_for('add_art') }}" class="btn btn-success">
-        <i class="fas fa-plus"></i></a>
-</div>
+    <div class="row">
+        <h3>You have no favorites yet. Add one now!</h3>
+        <a href="{{ url_for('add_art') }}" class="btn">
+            <i class="fas fa-plus"></i></a>
+    </div>
 {% endif %}
 
 {% endblock %}
