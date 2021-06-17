@@ -1,13 +1,14 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
-<body>
-    {% for cat in categories %}
-        {{ cat.category_name }}
+{% extends "base.html" %}
+{% block content %}
+
+    {% for item in art %}
+        <img src="{{ item.image }}" alt="cover"><br>
+        {{ item.title}}  <br>
+        {{ item.author}} <br>
+        {{ item.year}}  <br>
+        {{ item.category}} <br>
+        {{ item.summary}} <br>
+        {{ item.website}}  <br>
     {% endfor %}
-</body>
-</html>
+
+{% endblock %}
