@@ -45,3 +45,10 @@
     from {top: 4em; opacity: 1;}
     to {top: 0; opacity: 0;}
 }
+
+/* Colors */
+.light-register {
+    background-color: #778DA9;
+}
+
+
