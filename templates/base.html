@@ -18,7 +18,7 @@
     {% block styles %}
     {% endblock %}
 
-    <title></title>
+    <title>The Rainbow Collection</title>
 </head>
 
 <body>
@@ -27,7 +27,11 @@
 
         <nav class="nav-extended text-shadow blue-grey darken-4">
             <div class="nav-wrapper">
-                <a href="{{ url_for('home') }}" class="brand-logo">Hack Team 07</a>
+                <a href="{{ url_for('home') }}" class="brand-logo font-gilbert">
+                    The
+                    <span class="pink-text font-gilbert">R</span><span class="purple-text font-gilbert">a</span><span class="blue-text text-darken-2 font-gilbert">i</span><span class="light-green-text text-accent-3 font-gilbert">n</span><span class="yellow-text text-accent-2 font-gilbert">b</span><span class="orange-text font-gilbert">o</span><span class="red-text font-gilbert">w</span>
+                    Collection
+                </a>
                 <a href="#" data-target="mobile-demo" class="sidenav-trigger right"><i class="fas fa-bars"></i></a>
                 <ul class="right hide-on-med-and-down">
                     {% include "partials/navbar.html" %}
@@ -37,7 +41,13 @@
     
         <!-- mobile sidenav -->
         <ul class="sidenav" id="mobile-demo">
-            <li><h4 class="center-align">Hack Team 07</h4></li>
+            <li>
+                <h4 class="center-align font-gilbert">
+                    The<br>
+                    <span class="pink-text font-gilbert">R</span><span class="purple-text font-gilbert">a</span><span class="blue-text text-darken-2 font-gilbert">i</span><span class="light-green-text text-accent-3 font-gilbert">n</span><span class="yellow-text text-accent-2 font-gilbert">b</span><span class="orange-text font-gilbert">o</span><span class="red-text font-gilbert">w</span>
+                    <br>Collection
+                </h4>
+            </li>
             {% include "partials/navbar.html" %}
         </ul>
 
