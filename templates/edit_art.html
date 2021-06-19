@@ -1,0 +1,64 @@
+{% extends "base.html" %}
+{% block content %}
+
+<h3>Edit an Art Piece</h3>
+
+<div class="row">
+    <form class="col s12" method="POST" action="{{ url_for('edit_art') }}">
+        <!-- Title -->
+        <div class="mb-3">
+            <label for="title" class="form-label">Title</label>
+            <input type="text" name="title" class="form-control" id="title" value="{{ result.title }}" minlength="3" maxlength="100">
+        </div>
+        <!-- Author -->
+        <div class="mb-3">
+            <label for="author" class="form-label">Author</label>
+            <input type="text" name="author" class="form-control" id="author" value="{{ result.author }}" minlength="5" maxlength="50">
+        </div>
+        <!-- Year -->
+        <div class="mb-3">
+            <label for="year" class="form-label">Year</label>
+            <input type="text" name="year" class="form-control" id="year" value="{{ result.year }}">
+        </div>
+        <!-- Country -->
+        <div class="mb-3">
+            <label for="country" class="form-label">Country</label>
+            <input type="text" name="country" class="form-control" id="country" value="{{ result.country }}">
+        </div>
+        <!-- Summary -->
+        <div class="mb-3">
+            <label for="summary" class="form-label">Summary</label>
+            <textarea type="text" name="summary" class="form-control" id="summary" value="{{ result.summary }}"></textarea>
+        </div>
+        <!-- Category -->
+        <div class="mb-3">
+            <select class="form-select" name="category" aria-label="form-select-lg">
+                <option selected>Pick a category</option>
+                {% for cat in categories %}
+                <option value="{{ cat.category_name }}">{{ cat.category_name }}</option>
+                {% endfor %}
+            </select>
+        </div>
+        <!-- Explicity -->
+        <div class="mb-3">
+            <select class="form-select" name="is_explicit" aria-label="form-select-lg">
+                <option selected>Is it explicit?</option>
+                <option value="{{ true }}">Yes</option>
+                <option value="{{ false }}">No</option>
+            </select>
+        </div>
+        <!-- Cover upload -->
+        <div class="mb-3">
+            <label for="cover" class="form-label">Paste cover url here</label>
+            <input type="text" name="cover" class="form-control" id="cover">
+        </div>
+        <!-- Website -->
+        <div class="mb-3">
+            <label for="website" class="form-label">Website</label>
+            <input type="text" name="website" class="form-control" id="website" value="{{ result.website }}">
+        </div>
+        <button type="submit" class="btn btn-primary">Edit</button>
+    </form>
+</div>
+
+{% endblock %}

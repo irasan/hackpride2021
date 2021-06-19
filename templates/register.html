@@ -1,9 +1,10 @@
 {% extends "base.html" %}
 {% block content %}
 
-    <h3 class="center-align">Register</h3>
-
-    <div class="row light-register">
+    <div class="row blue-grey lighten-1" id="register">
+        <h3 class="center-align text-shadow blue-grey lighten-2">
+            <span class="pink-text font-gilbert">R</span><span class="purple-text font-gilbert">E</span><span class="blue-text text-darken-2 font-gilbert">G</span><span class="light-green-text text-accent-3 font-gilbert">I</span><span class="yellow-text text-accent-2 font-gilbert">S</span><span class="orange-text font-gilbert">T</span><span class="red-text font-gilbert">E</span><span class="pink-text font-gilbert">R</span>
+        </h3>
         <form class="col s12 m8 offset-m2" method="POST" action="{{ url_for('register') }}">
             <div class="card-panel">
 
@@ -55,21 +56,21 @@
 
                 <!-- register -->
                 <div class="row">
-                    <button type="submit" id="register" class="col s12 btn-large light-blue darken-4">
+                    <button type="submit" class="col s12 btn-large light-blue darken-4">
                         Register <i class="fas fa-sign-in-alt"></i>
                     </button>
                 </div>
 
             </div>
         </form>
-    </div>
-
-    <div class="row">
-        <div class="col s12">
-            <p class="center-align">
-                Already Registered?
-                <a href="{{ url_for('login') }}" class="light-blue-text text-darken-4">Log In</a>
-            </p>
+        
+        <div class="row">
+            <div class="col s12">
+                <p class="center-align">
+                    Already Registered?
+                    <a href="{{ url_for('login') }}" class="black-text bold">LOG IN</a>
+                </p>
+            </div>
         </div>
     </div>
 

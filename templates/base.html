@@ -25,24 +25,42 @@
 
     <header>
 
+        <!-- navbar dropdown -->
+        <ul id="account-dropdown" class="dropdown-content blue-grey darken-4 text-shadow-none">
+            {% if session.user %}
+            <!-- user is logged-in -->
+                <li><a href="{{ url_for('profile', username=session['user']) }}">Profile</a></li>
+                <li><a href="{{ url_for('logout') }}">Log Out</a></li>
+            {% else %}
+                <!-- user is not logged-in -->
+                <li><a href="{{ url_for('login') }}">Log In</a></li>
+                <li><a href="{{ url_for('register') }}">Register</a></li>
+            {% endif %}
+        </ul>
+
         <nav class="nav-extended text-shadow blue-grey darken-4">
             <div class="nav-wrapper">
-                <a href="{{ url_for('home') }}" class="brand-logo font-gilbert">
+                <a href="{{ url_for('home') }}" class="brand-logo left font-gilbert">
                     The
                     <span class="pink-text font-gilbert">R</span><span class="purple-text font-gilbert">a</span><span class="blue-text text-darken-2 font-gilbert">i</span><span class="light-green-text text-accent-3 font-gilbert">n</span><span class="yellow-text text-accent-2 font-gilbert">b</span><span class="orange-text font-gilbert">o</span><span class="red-text font-gilbert">w</span>
                     Collection
                 </a>
                 <a href="#" data-target="mobile-demo" class="sidenav-trigger right"><i class="fas fa-bars"></i></a>
                 <ul class="right hide-on-med-and-down">
-                    {% include "partials/navbar.html" %}
+                    <li><a href="{{ url_for('home') }}">Home</a></li>
+                    {% if session.user %}
+                    <!-- user is logged-in -->
+                        <li><a href="{{ url_for('suggestions') }}">Make a Suggest</a></li>
+                    {% endif %}
+                    <li><a href="#!" class="dropdown-trigger" data-target="account-dropdown">Account</a></li>
                 </ul>
             </div>
         </nav>
     
         <!-- mobile sidenav -->
-        <ul class="sidenav" id="mobile-demo">
-            <li>
-                <h4 class="center-align font-gilbert">
+        <ul class="sidenav blue-grey lighten-3" id="mobile-demo">
+            <li class="blue-grey lighten-2">
+                <h4 class="center-align font-gilbert text-shadow white-text">
                     The<br>
                     <span class="pink-text font-gilbert">R</span><span class="purple-text font-gilbert">a</span><span class="blue-text text-darken-2 font-gilbert">i</span><span class="light-green-text text-accent-3 font-gilbert">n</span><span class="yellow-text text-accent-2 font-gilbert">b</span><span class="orange-text font-gilbert">o</span><span class="red-text font-gilbert">w</span>
                     <br>Collection
@@ -50,6 +68,34 @@
             </li>
             {% include "partials/navbar.html" %}
         </ul>
+
+        <!-- category sub-menu -->
+        <nav id="category-menu">
+            <div class="nav-wrapper blue-grey darken-2 text-shadow">
+                <div class="col s12">
+                    <a href="{{ url_for('category', category='artwork') }}">
+                        <span class="hide-on-small-only bold">Artwork</span>
+                        <i class="fas fa-palette hide-on-med-and-up"></i>
+                    </a>
+                    <a href="{{ url_for('category', category='books') }}">
+                        <span class="hide-on-small-only bold">Books</span>
+                        <i class="fas fa-book hide-on-med-and-up"></i>
+                    </a>
+                    <a href="{{ url_for('category', category='movies') }}">
+                        <span class="hide-on-small-only bold">Movies</span>
+                        <i class="fas fa-film hide-on-med-and-up"></i>
+                    </a>
+                    <a href="{{ url_for('category', category='music') }}">
+                        <span class="hide-on-small-only bold">Music</span>
+                        <i class="fas fa-music hide-on-med-and-up"></i>
+                    </a>
+                    <a href="{{ url_for('category', category='podcasts') }}">
+                        <span class="hide-on-small-only bold">Podcasts</span>
+                        <i class="fas fa-podcast hide-on-med-and-up"></i>
+                    </a>
+                </div>
+            </div>
+        </nav>
 
     </header>
 
@@ -64,8 +110,8 @@
     </main>
 
     <!-- footer -->
-    <footer>
-
+    <footer class="page-footer text-shadow blue-grey darken-4">
+         {% include "partials/footer.html" %}
     </footer>
 
     <!-- jQuery -->
