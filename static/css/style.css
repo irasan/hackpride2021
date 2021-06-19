@@ -1,4 +1,23 @@
+@import url("https://fonts.googleapis.com/css2?family=Bangers&family=Montserrat:wght@300;400&display=swap");
+
 /* GLOBAL SETTINGS */
+@font-face {
+    font-family: "Gilbert";
+    src: url("../fonts/gilbert.woff");
+}
+
+* {
+    font-family: "Montserrat", sans-serif;
+}
+
+h1, h2, h3, h4 {
+    font-family: "Gilbert", "Bangers", sans-serif;
+}
+
+.font-gilbert {
+    font-family: "gilbert", "Bangers", sans-serif;
+}
+
 .text-shadow {
     text-shadow: 2px 2px 2px rgba(0, 0, 0, 0.5);
 }
@@ -51,4 +70,11 @@
     background-color: #778DA9;
 }
 
+/* CARDS */
+
+
+.card-image img {
+    object-fit: cover;
+    height: 30vw;
+}
 

@@ -4,7 +4,7 @@
 <h3>
     <img src="{{ url_for('static', filename='images/avatars/'+user.avatar+'.png') }}" class="avatar"
         alt="{{ user.avatar }}">
-    {{ user.username }}'s Favourites
+    {{ user.username|title }}'s Favourites
 </h3>
 
 <!-- first check if there's any saved items to display -->
