@@ -32,6 +32,21 @@ def login_required(f):
     return decorated_function
 
 
+# @is_admin decorator
+def is_admin(f):
+    @wraps(f)
+    @login_required  # must be logged-in to access this function
+    def decorated_function(*args, **kwargs):
+        # get session user
+        user = mongo.db.users.find_one({"username": session["user"].lower()})
+        if not user["is_admin"]:
+            flash("This page is restricted to admin access")
+            return redirect(url_for("home"))
+        # user is an admin
+        return f(*args, **kwargs)
+    return decorated_function
+
+
 @app.route("/")
 @app.route("/home")
 def home():
@@ -39,7 +54,28 @@ def home():
     The homepage to display a lit of all artwork from the database
     """
     art = list(mongo.db.art.find())
-    return render_template("home.html", art=art)
+    artwork = []
+    books = []
+    movies = []
+    music = []
+    podcasts = []
+    for record in art:
+        if record["category"] == "artwork":
+            artwork.append(record)
+        elif record["category"] == "books":
+            books.append(record)
+        elif record["category"] == "movies":
+            movies.append(record)
+        elif record["category"] == "music":
+            music.append(record)
+        elif record["category"] == "podcasts":
+            podcasts.append(record)
+        else:
+            print("Invalid category")
+    return render_template(
+        "home.html", artwork=artwork, books=books,
+        movies=movies, music=music, podcasts=podcasts
+    )
 
 
 @app.route("/register", methods=["GET", "POST"])
@@ -154,56 +190,96 @@ def logout():
 
 @app.route("/add_art", methods=["GET", "POST"])
 @login_required
+@is_admin
 def add_art():
-    categories = list(mongo.db.categories.find().sort(
-                    "category_name", 1))
     result = {}
-    if "user" in session:
-        is_admin = mongo.db.users.find_one(
-            {"username": session["user"]})["is_admin"]
-        if is_admin:
-            if request.method == "POST":
-                art = {
-                        "title": request.form.get("title"),
-                        "author": request.form.get("author"),
-                        "year": int(request.form.get("year")),
-                        "country": request.form.get("country"),
-                        "category": request.form.get("category"),
-                        "is_explicit": request.form.get("is_explicit"),
-                        "summary": request.form.get("summary"),
-                        "website": request.form.get("website"),
-                        "image": request.form.get("cover"),
-                        "reviews": int(0),
-                        "favorites": int(0)
-                    }
-                # check if cover url is preperly formatted
-                # if not - reload the page but save user's inputs
-                if not request.form.get("cover").endswith(('jpeg', 'png', 'jpg')):
-                    flash("Please enter a valid url!")
-                    result = {
-                        "title": request.form.get("title"),
-                        "author": request.form.get("author"),
-                        "year": int(request.form.get("year")),
-                        "country": request.form.get("country"),
-                        "category": request.form.get("category"),
-                        "is_explicit": request.form.get("is_explicit"),
-                        "summary": request.form.get("summary"),
-                        "website": request.form.get("website"),
-                        "image": "",
-                        "reviews": int(0),
-                        "favorites": int(0)
-                    }
-                    return render_template(
-                        "add_art.html", result=result, categories=categories)
+    categories = list(mongo.db.categories.find().sort("category_name", 1))
+    if request.method == "POST":
+        art = {
+                "title": request.form.get("title"),
+                "author": request.form.get("author"),
+                "year": int(request.form.get("year")),
+                "country": request.form.get("country"),
+                "category": request.form.get("category"),
+                "is_explicit": request.form.get("is_explicit"),
+                "summary": request.form.get("summary"),
+                "website": request.form.get("website"),
+                "image": request.form.get("cover"),
+                "reviews": int(0),
+                "favorites": int(0)
+            }
+        # check if cover url is preperly formatted
+        # if not - reload the page but save user's inputs
+        if not request.form.get("cover").endswith(('jpeg', 'png', 'jpg')):
+            flash("Please enter a valid url!")
+            result = {
+                "title": request.form.get("title"),
+                "author": request.form.get("author"),
+                "year": int(request.form.get("year")),
+                "country": request.form.get("country"),
+                "category": request.form.get("category"),
+                "is_explicit": request.form.get("is_explicit"),
+                "summary": request.form.get("summary"),
+                "website": request.form.get("website"),
+                "image": "",
+                "reviews": int(0),
+                "favorites": int(0)
+            }
+            return render_template(
+                "add_art.html", result=result, categories=categories)
 
-                else:
-                    mongo.db.art.insert_one(art)
-                    flash("Your Review Was Successfully Added")
-                    return render_template("home.html")
+        else:
+            mongo.db.art.insert_one(art)
+            flash("Your Review Was Successfully Added")
+            return render_template("home.html")
+    return render_template("add_art.html", result=result, categories=categories)
 
-        return render_template(
-            "add_art.html", result=result, categories=categories)
-    return render_template("unauthorised_error.html")
+
+@app.route("/edit_art/<id>", methods=["GET", "POST"])
+@login_required
+@is_admin
+def edit_art(id):
+    result = {}
+    categories = list(mongo.db.categories.find().sort("category_name", 1))
+    if request.method == "POST":
+        art = {
+                "title": request.form.get("title"),
+                "author": request.form.get("author"),
+                "year": int(request.form.get("year")),
+                "country": request.form.get("country"),
+                "category": request.form.get("category"),
+                "is_explicit": request.form.get("is_explicit"),
+                "summary": request.form.get("summary"),
+                "website": request.form.get("website"),
+                "image": request.form.get("cover"),
+                "reviews": int(0),
+                "favorites": int(0)
+            }
+        # check if cover url is preperly formatted
+        # if not - reload the page but save user's inputs
+        if not request.form.get("cover").endswith(('jpeg', 'png', 'jpg')):
+            flash("Please enter a valid url!")
+            result = {
+                "title": request.form.get("title"),
+                "author": request.form.get("author"),
+                "year": int(request.form.get("year")),
+                "country": request.form.get("country"),
+                "category": request.form.get("category"),
+                "is_explicit": request.form.get("is_explicit"),
+                "summary": request.form.get("summary"),
+                "website": request.form.get("website"),
+                "image": "",
+                "reviews": int(0),
+                "favorites": int(0)
+            }
+            return render_template(
+                "add_art.html", result=result, categories=categories)
+
+        else:
+            mongo.db.art.insert_one(art)
+            flash("Your Review Was Successfully Added")
+            return render_template("home.html")
+    return render_template("add_art.html", result=result, categories=categories)
 
 
 @app.route("/artpiece/<id>", methods=["GET", "POST"])
@@ -220,8 +296,10 @@ def category(category):
 
 
 @app.route("/suggestions", methods=["GET", "POST"])
+@login_required
 def suggestions():
-    return render_template("suggestions.html")
+    categories = list(mongo.db.categories.find().sort("category_name", 1))
+    return render_template("suggestions.html", categories=categories)
 
 
 @app.errorhandler(404)
