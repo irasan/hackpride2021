@@ -6,6 +6,7 @@ from flask import (
 from flask_pymongo import PyMongo
 from werkzeug.security import generate_password_hash, check_password_hash
 from bson.objectid import ObjectId
+from datetime import date
 if os.path.exists("env.py"):
     import env
 
@@ -198,7 +199,7 @@ def add_art():
 
                 else:
                     mongo.db.art.insert_one(art)
-                    flash("Your Review Was Successfully Added")
+                    flash("Item Was Successfully Added to Collection")
                     return render_template("home.html")
 
         return render_template(
@@ -209,7 +210,40 @@ def add_art():
 @app.route("/artpiece/<id>", methods=["GET", "POST"])
 def artpiece(id):
     # get the id and display the full page with reviews
-    return render_template("artpiece.html")
+    item = mongo.db.art.find_one({"_id": ObjectId(id)})
+    reviews = list(mongo.db.reviews.find(
+        {"item_id": ObjectId(id)}).sort("date", 1))
+
+    if request.method == "POST":
+        if "user" in session:
+            # create document for reviews collection
+            user_review = {
+                "review": request.form.get("review"),
+                "username": session["user"],
+                "date": date.today(),
+                "item_id": ObjectId(id),
+            }
+            mongo.db.reviews.insert_one(user_review)
+            flash("Your Review Was Successfully Added")
+            return render_template("artpiece.html", item=item, reviews=reviews)
+        else:
+            flash("Please log in to leave a review")
+            return render_template("artpiece.html", item=item, reviews=reviews)
+
+    return render_template("artpiece.html", item=item, reviews=reviews)
+
+
+@app.route("/add_favorite/<id>")
+# add art piece to user's favorites'
+def add_favorite(id):
+    item = mongo.db.art.find_one({"_id": ObjectId(id)})
+    reviews = list(mongo.db.reviews.find(
+        {"item_id": ObjectId(id)}).sort("date", 1))
+    mongo.db.users.find_one_and_update(
+        {"username": session["user"].lower()},
+        {"$push": {"favorites": ObjectId(id)}})
+    flash("This art piece has been saved to your favorites!")
+    return render_template("artpiece.html", item=item, reviews=reviews)
 
 
 @app.route("/category/<category>")

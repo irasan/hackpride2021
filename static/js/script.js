@@ -69,3 +69,8 @@ $(document).ready(function () {
         });
     }
 });
+
+// modal for adding reviews
+ $(document).ready(function(){
+    $('.modal').modal();
+  });

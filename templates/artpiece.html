@@ -1,6 +1,68 @@
 {% extends "base.html" %}
 {% block content %}
 
-<!-- TODO: Iryna -->
+<!-- book -->
+<div class="row">
+    <div class="col s12">
+        <h2 class="header">{{ item.title|capitalize }}</h2>
+        <h5>by {{ item.author|title }}</h5>
+    </div>
+</div>
+<div class="row">
+    <div class="col s12 m6">
+        <div class="card horizontal">
+            <div class="card-image">
+                {% if item.image|length %}
+                <img class="responsive-img" src="{{ item.image }}" alt="cover">
+                {% else %}
+                <img class="responsive-img" src="../static/images/no-image.jpeg" alt="no_image">
+                {% endif %}
+            </div>
+            <div class="card-stacked">
+                <div class="card-content">
+                    <p>{{ item.year }}</p>
+                    <p>{{ item.summary }}</p>
+                </div>
+                <div class="card-action">
+                    <a href="{{ item.website }}">VIEW ONLINE</a>
+                </div>
+            </div>
+        </div>
+        <a class="waves-effect waves-light btn" href="{{ url_for('add_favorite', id=item._id) }}">Save to favorites</a>
+    </div>
+
+
+    <!-- reviews -->
+    <div class="col s12 m6 center">
+        {% if reviews|length > 0 %}
+        <h5>Users reviews: <span class="right"><a class="waves-effect btn-small modal-trigger" href="#add_review">Add
+                    review</a></span></h5>
+        {% for rev in reviews %}
+        <div class="review-bubble">
+            <p>{{rev.review}}<br>
+                <span>by {{rev.username}} &middot; {{rev.date.strftime('%Y-%m-%d')  }}</span></p>
+        </div>
+        {% endfor %}
+        {% else %}
+        <h5>There's no reviews yet. Be the first one to share your thoughts!</h5>
+        <a class="waves-effect btn-small modal-trigger" href="#add_review">Add
+                    review</a>
+        {% endif %}
+    </div>
+
+    <!-- Modal for adding reviews -->
+    <div id="add_review" class="modal">
+        <div class="modal-content">
+            <h4>Leave your comment below:</h4>
+            <form method="POST" action="{{ url_for('artpiece', id=item._id) }}">
+                <textarea type="text" name="review" id="review"></textarea>
+            </form>
+        </div>
+        <div class="modal-footer">
+            <button type="reset" class="modal-close waves-effect btn-flat">Cancel</a>
+            <button type="submit" class="modal-close waves-effect btn-flat">Send</a>
+        </div>
+    </div>
+</div>
 
 {% endblock %}

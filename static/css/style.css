@@ -91,6 +91,12 @@ h1, h2, h3, h4 {
     justify-content: center;
 }
 
+/* REVIEWS */
+.review-bubble {
+    border: 1px solid #000;
+    border-radius: 0.5rem;
+}
+
 /* FORM */
 .add-border {
     border: 1px solid #CFEBDF;
