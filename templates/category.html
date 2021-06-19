@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+{% block content %}
+
+{% for item in art|reverse %}
+    <!-- TODO: Ana -->
+    {% if loop.index == 1 %}
+        <h3>New Release - {{ item.title }}</h3>
+    {% else %}
+        {{ item.title }}<br>
+    {% endif %}
+{% endfor %}
+
+{% endblock %}
