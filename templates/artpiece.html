@@ -35,8 +35,6 @@
     <!-- reviews -->
     <div class="col s12 m6 center">
         {% if reviews|length > 0 %}
-        <h5>Users reviews: <span class="right"><a class="waves-effect btn-small modal-trigger" href="#add_review">Add
-                    review</a></span></h5>
         {% for rev in reviews %}
         <div class="review-bubble">
             <p>{{rev.review}}<br>
@@ -45,9 +43,9 @@
         {% endfor %}
         {% else %}
         <h5>There's no reviews yet. Be the first one to share your thoughts!</h5>
-        <a class="waves-effect btn-small modal-trigger" href="#add_review">Add
-                    review</a>
         {% endif %}
+        <span class="right"><a class="waves-effect btn-small modal-trigger" href="#add_review">Add
+                    review</a></span>
     </div>
 
     <!-- Modal for adding reviews -->
