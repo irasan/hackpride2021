@@ -1,4 +1,5 @@
 <li class="col">
+    <a href="{{ url_for('artpiece', id=item._id) }}">
     <figure>
         <img src="{{ item.image }}" alt="{{ item.title }}" onerror="this.onerror=null;this.src='{{ url_for('static', filename='images/no_img.png') }}';">
         <figcaption>
@@ -6,6 +7,7 @@
             <p>{{ item.year }}</p>
         </figcaption>
     </figure>
+    </a>
     <p class="white-text bold text-shadow">{{ item.title|truncate(50) }}</p>
     <p class="grey-text text-lighten-1 bold text-shadow">{{ item.author|truncate(50) }}</p>
     <p class="white-text bold">

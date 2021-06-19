@@ -372,7 +372,8 @@ hr.divider::before {
 /* REVIEWS */
 .review-bubble {
     border: 1px solid #000;
-    border-radius: 0.5rem;
+    background: #fff;
+    margin-bottom: 10px;
 }
 
 /* FORM */
