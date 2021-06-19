@@ -1,5 +1,6 @@
 @import url("https://fonts.googleapis.com/css2?family=Bangers&family=Montserrat:wght@300;400&display=swap");
 
+
 /* GLOBAL SETTINGS */
 @font-face {
     font-family: "Gilbert";
@@ -8,6 +9,23 @@
 
 * {
     font-family: "Montserrat", sans-serif;
+}
+
+body {
+    display: flex;
+    min-height: 100vh;
+    flex-direction: column;
+    background: url("../images/rainbow_flag_opacity.png") no-repeat center center fixed;
+    background-size: cover;
+}
+
+main {
+    flex: 1 0 auto;
+    padding: 2.5em 0;
+}
+
+main.container {
+    width: 90%;
 }
 
 h1, h2, h3, h4 {
@@ -19,11 +37,20 @@ h1, h2, h3, h4 {
 }
 
 .text-shadow {
-    text-shadow: 2px 2px 2px rgba(0, 0, 0, 0.5);
+    text-shadow: 2px 2px 2px rgba(0, 0, 0, 0.25);
+}
+
+.text-shadow-none {
+    text-shadow: unset;
 }
 
 .bold {
     font-weight: bold;
+}
+
+.black-opacity-bg {
+    border-radius: 8px;
+    background-color: rgba(0, 0, 0, 0.5);
 }
 
 
@@ -31,6 +58,121 @@ h1, h2, h3, h4 {
 .avatar {
     height: 1em;
     vertical-align: middle;
+}
+
+
+/* NAVBAR */
+nav .brand-logo {
+    padding-left: 1em;
+}
+
+#category-menu {
+    height: 2.5em;
+    line-height: 2.5em;
+}
+
+#category-menu .nav-wrapper {
+    text-transform: uppercase;
+}
+
+nav .nav-wrapper .col {
+    margin: 0 10%;
+    display: flex;
+    height: 2.5em;
+    justify-content: space-between;
+}
+
+nav .nav-wrapper .col a {
+    transition: all 0.3s ease-in-out;
+    text-align: center;
+}
+
+.fa-bars {
+    transition: all 0.3s ease-in-out;
+}
+
+nav .nav-wrapper .col a:hover,
+.fa-bars:hover {
+    color: #ffca28;
+}
+
+nav .nav-wrapper .col i {
+    line-height: 1.5em;
+}
+
+nav .nav-wrapper .right {
+    padding-right: 1em;
+}
+
+nav #account-dropdown {
+    top: -64px;
+}
+
+nav #account-dropdown li a {
+    color: white;
+}
+
+nav #account-dropdown li:hover {
+    background-color: #78909c;
+}
+
+.sidenav {
+    display: flex;
+    flex-direction: column;
+}
+
+.sidenav li>a {
+    font-weight: bold;
+}
+
+.sidenav li:first-of-type {
+    letter-spacing: 5px;
+}
+
+.sidenav li:last-of-type {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 60px;
+}
+
+
+/* HR */
+hr.divider { 
+    position: relative;
+    height: 0.25em; 
+    border: 0;
+    overflow: hidden;
+    opacity: 0.75;
+}
+
+hr.divider::before {
+    content: "";
+    display: block;
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 0.25em;
+    width: 5em;
+    background: #181818;
+    box-shadow:
+        5em 0 0 0 #784F17,
+        10em 0 0 0 #FE0000,
+        15em 0 0 0 #FD8C00,
+        20em 0 0 0 #FFE500,
+        25em 0 0 0 #119F0B,
+        30em 0 0 0 #0644B3,
+        35em 0 0 0 #C22EDC,
+        40em 0 0 0 #181818,
+        45em 0 0 0 #784F17,
+        50em 0 0 0 #FE0000,
+        55em 0 0 0 #FD8C00,
+        60em 0 0 0 #FFE500,
+        65em 0 0 0 #119F0B,
+        70em 0 0 0 #0644B3,
+        75em 0 0 0 #C22EDC,
+        80em 0 0 0 #181818,
+        85em 0 0 0 #784F17;
 }
 
 
@@ -48,6 +190,10 @@ h1, h2, h3, h4 {
     z-index: 100;
     top: 4em;
     font-size: 2em;
+    background-color: rgba(0, 0, 0, 0.90);
+    border: 1em solid transparent;
+    border-image: linear-gradient(to bottom right, #b827fc 0%, #2c90fc 25%, #b8fd33 50%, #fec837 75%, #fd1892 100%);
+    border-image-slice: 1;
 }
 
 #flashToast.show {
@@ -65,18 +211,150 @@ h1, h2, h3, h4 {
     to {top: 0; opacity: 0;}
 }
 
-/* Colors */
-.light-register {
-    background-color: #778DA9;
+
+/* REGISTER */
+#register,
+#login {
+    border-radius: 1em;
 }
+
+#register h3,
+#login h3 {
+    padding: 0.5em;
+    letter-spacing: 5px;
+    font-size: 4rem;
+}
+
 
 /* CARDS */
-
-
 .card-image img {
     object-fit: cover;
-    height: 30vw;
+    height: 15vw;
 }
+
+.card .card-image .card-title {
+    padding: 0;
+    width: 100%;
+    font-size: 1.5em;
+    font-weight: bold;
+    text-align: center;
+    background: rgba(0, 0, 0, 0.75);
+    border-top: 5px solid rgba(0, 0, 0, 1);
+    border-bottom: 5px solid rgba(0, 0, 0, 1);
+}
+
+.card .card-image,
+.card .card-image .card-title {
+    transition: all 0.3s ease-in-out;
+}
+
+.card .card-image:hover .card-title {
+    height: 100%;
+}
+
+
+/* CARD-LIST */
+.card-list {
+    width: 100%;
+    margin: 0 auto;
+    align-self: center;
+    justify-items: center;
+    background-color: rgba(0, 0, 0, 0.5);
+}
+
+.card-list li {
+    margin: 1em auto;
+    width: calc(175px + 1em);
+}
+
+.card-list li p {
+    line-height: 0.5;
+}
+
+.card-list li figure {
+    position: relative;
+    overflow: hidden;
+    margin: 0 auto;
+    width: 100%;
+    height: 250px;
+    perspective: 50em;
+    border-radius: 8px;
+    vertical-align: middle;
+    display: inline-block;
+    transition: all 0.3s ease-in-out;
+}
+
+.card-list li figure p {
+    line-height: unset;
+}
+
+.card-list li figure img {
+    width: 100%;
+    border-radius: 8px;
+    vertical-align: middle;
+    transition: all 0.3s ease-in-out;
+}
+
+.card-list li figure figcaption {
+    position: absolute;
+    width: 100%;
+    padding: 3%;
+    text-align: center;
+    z-index: 2;
+    top: 50%;
+    opacity: 0;
+    transition: all 0.3s ease-in-out;
+}
+
+.card-list li figure figcaption p {
+    font-size: 2em;
+    font-weight: bolder;
+    width: 90%;
+    text-align: center;
+    margin: 0 auto;
+}
+
+.card-list li figure::after {
+    position: absolute;
+    content: "";
+    top: 12px;
+    left: 12px;
+    right: 12px;
+    bottom: 12px;
+    opacity: 0;
+    background-color: black;
+    background: linear-gradient(180deg, #181818 12.5%,
+		#784F17 12.5%, 25%, #FE0000 25%, 37.5%,
+		#FD8C00 37.5%, 50%, #FFE500 50%, 62.5%,
+		#119F0B 62.5%, 75%, #0644B3 75%, 87.5%,
+		#C22EDC 87.5%);
+    transform: rotateX(-90deg);
+    transform-origin: 50% 50%;
+    transition: all 0.3s ease-in-out;
+    transition-delay: 0.2s;
+}
+
+.card-list li figure:hover img {
+    transform: scale(1.25);
+    opacity: 0.25;
+}
+
+.card-list li figure:hover {
+    background-color: white;
+}
+
+.card-list li figure:hover figcaption {
+    opacity: 1;
+    transition-delay: 0.5s;
+    transform: translateY(-50%);
+}
+
+.card-list li figure:hover::after,
+.card-list li figure.hover::after {
+    transform: rotateX(0);
+    opacity: 0.9;
+}
+
 
 /* BACKGROUNDS */
 .pride-flag {
@@ -94,10 +372,15 @@ h1, h2, h3, h4 {
 /* FORM */
 .add-border {
     border: 1px solid #CFEBDF;
-    
 }
 
 .add-height {
     height: 200px;
 }
 
+/* MEDIA QUERIES */
+@media only screen and (max-width: 370px) {
+    nav .brand-logo {
+        font-size: 7.5vw;
+    }
+}

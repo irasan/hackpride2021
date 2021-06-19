@@ -2,8 +2,7 @@
 {% block content %}
 
 <h3>
-    <img src="{{ url_for('static', filename='images/avatars/'+user.avatar+'.png') }}" class="avatar"
-        alt="{{ user.avatar }}">
+    <img src="{{ url_for('static', filename='images/avatars/'+user.avatar+'.png') }}" class="avatar" alt="{{ user.avatar }}">
     {{ user.username|title }}'s Favourites
 </h3>
 
