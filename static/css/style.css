@@ -157,6 +157,13 @@ nav #account-dropdown li:hover {
     width: 75%;
 }
 
+/*CATEGORY*/
+
+.library {
+    padding-bottom: 3px;
+    padding-top: 3px;
+    border-radius: 15px;
+}
 
 /* HR */
 hr.divider { 
@@ -231,7 +238,6 @@ hr.divider::before {
     from {top: 4em; opacity: 1;}
     to {top: 0; opacity: 0;}
 }
-
 
 /* REGISTER */
 #register,
