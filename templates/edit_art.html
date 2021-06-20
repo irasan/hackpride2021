@@ -62,6 +62,9 @@
                 {% elif art.is_explicit == "False" %}
                     <option value="True">Yes</option>
                     <option value="False" selected>No</option>
+                {% else %}
+                    <option value="True">Yes</option>
+                    <option value="False">No</option>
                 {% endif %}
             </select>
             <label for="is_explicit" class="form-label">Is it explicit? <span class="red-text">*</span></label>

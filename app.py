@@ -159,7 +159,10 @@ def login():
                 if check_password_hash(
                     existing_user["password"], request.form.get("password")):
                         session["user"] = request.form.get("username").lower()
-                        session["is_admin"] = True
+                        check_admin = mongo.db.users.find_one(
+                            {"username": request.form.get("username").lower()})
+                        if check_admin["is_admin"]:
+                            session["is_admin"] = True
                         flash(f"Welcome, {request.form.get('username')}")
                         return redirect(url_for(
                             "profile", username=session["user"]))
@@ -244,8 +247,9 @@ def approve_art(id):
 def logout():
     # remove user from session cookies
     flash("You Have Been Logged Out")
-    session.pop("user")
-    session.pop("is_admin")
+    # session.pop("user")
+    # session.pop("is_admin")
+    session.clear()
     return redirect(url_for("login"))
 
 
@@ -266,7 +270,8 @@ def add_art():
                 "website": request.form.get("website"),
                 "image": request.form.get("cover"),
                 "reviews": int(0),
-                "favorites": int(0)
+                "favorites": int(0),
+                "is_approved": True
         }
         mongo.db.art.insert_one(art)
         flash("Your Review Was Successfully Added")
@@ -294,7 +299,8 @@ def edit_art(id):
                 "website": request.form.get("website"),
                 "image": request.form.get("cover"),
                 "reviews": reviews,
-                "favorites": favorites
+                "favorites": favorites,
+                "is_approved": True
         }
         mongo.db.art.update({"_id": ObjectId(id)}, art)
         flash("Your Review Was Successfully Edited")
@@ -365,7 +371,7 @@ def remove_favorite(id):
 @app.route("/category/<category>")
 def category(category):
     # display all records for each category
-    art = list(mongo.db.art.find({"category": category}))
+    art = list(mongo.db.art.find({"category": category, "is_approved": True}))
     return render_template("category.html", art=art, category=category)
 
 
