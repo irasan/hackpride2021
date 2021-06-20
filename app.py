@@ -28,7 +28,7 @@ def login_required(f):
     def decorated_function(*args, **kwargs):
         # no "user" in session
         if "user" not in session:
-            flash("You must log in to view this page")
+            flash("You Must Log In To View This Page")
             return redirect(url_for("login"))
         # user is in session
         return f(*args, **kwargs)
@@ -43,7 +43,7 @@ def is_admin(f):
         # get session user
         user = mongo.db.users.find_one({"username": session["user"].lower()})
         if not user["is_admin"]:
-            flash("This page is restricted to admin access")
+            flash("This Page Is Restricted To Admin Access")
             return redirect(url_for("home"))
         # user is an admin
         return f(*args, **kwargs)
@@ -103,7 +103,7 @@ def register():
                 {"username": request.form.get("username").lower()})
 
             if existing_user:
-                flash("Username already exists")
+                flash("Username Already Exists")
                 return redirect(url_for("register"))
 
             if request.form.get("password") == request.form.get("password-confirm"):
@@ -124,7 +124,7 @@ def register():
                 return redirect(url_for("profile", username=session["user"]))
 
             # passwords don't match each other
-            flash("Passwords must match")
+            flash("Passwords Must Match")
             return redirect(url_for("register"))
 
         # generate the form to register a new user
@@ -159,7 +159,10 @@ def login():
                 if check_password_hash(
                     existing_user["password"], request.form.get("password")):
                         session["user"] = request.form.get("username").lower()
-                        session["is_admin"] = True
+                        check_admin = mongo.db.users.find_one(
+                            {"username": request.form.get("username").lower()})
+                        if check_admin["is_admin"]:
+                            session["is_admin"] = True
                         flash(f"Welcome, {request.form.get('username')}")
                         return redirect(url_for(
                             "profile", username=session["user"]))
@@ -234,7 +237,8 @@ def approve_art(id):
     """
     Approve a suggestion from the Admin-Page
     """
-    mongo.db.art.find_one_and_update({"_id": ObjectId(id)}, {"$set": {"is_approved": True}})
+    mongo.db.art.find_one_and_update(
+        {"_id": ObjectId(id)}, {"$set": {"is_approved": True}})
     return redirect(url_for("admin"))
 
 
@@ -242,9 +246,10 @@ def approve_art(id):
 @login_required
 def logout():
     # remove user from session cookies
-    flash("You have been logged out")
-    session.pop("user")
-    session.pop("is_admin")
+    flash("You Have Been Logged Out")
+    # session.pop("user")
+    # session.pop("is_admin")
+    session.clear()
     return redirect(url_for("login"))
 
 
@@ -252,7 +257,6 @@ def logout():
 @login_required
 @is_admin
 def add_art():
-    result = {}
     categories = list(mongo.db.categories.find().sort("category_name", 1))
     if request.method == "POST":
         art = {
@@ -266,41 +270,23 @@ def add_art():
                 "website": request.form.get("website"),
                 "image": request.form.get("cover"),
                 "reviews": int(0),
-                "favorites": int(0)
-            }
-        # check if cover url is preperly formatted
-        # if not - reload the page but save user's inputs
-        if not request.form.get("cover").endswith(('jpeg', 'png', 'jpg')):
-            flash("Please enter a valid url!")
-            result = {
-                "title": request.form.get("title"),
-                "author": request.form.get("author"),
-                "year": int(request.form.get("year")),
-                "country": request.form.get("country"),
-                "category": request.form.get("category"),
-                "is_explicit": request.form.get("is_explicit"),
-                "summary": request.form.get("summary"),
-                "website": request.form.get("website"),
-                "image": "",
-                "reviews": int(0),
-                "favorites": int(0)
-            }
-            return render_template(
-                "add_art.html", result=result, categories=categories)
-
-        else:
-            mongo.db.art.insert_one(art)
-            flash("Your Review Was Successfully Added")
-            return render_template("home.html")
-    return render_template(
-        "add_art.html", result=result, categories=categories)
+                "favorites": int(0),
+                "is_approved": bool(True)
+        }
+        mongo.db.art.insert_one(art)
+        flash("Your Review Was Successfully Added")
+        return render_template("home.html")
+    return render_template("add_art.html", categories=categories)
 
 
 @app.route("/edit_art/<id>", methods=["GET", "POST"])
 @login_required
 @is_admin
 def edit_art(id):
-    result = {}
+    art = mongo.db.art.find_one({"_id": ObjectId(id)})
+    print(art)
+    reviews = art["reviews"]
+    favorites = art["favorites"]
     categories = list(mongo.db.categories.find().sort("category_name", 1))
     if request.method == "POST":
         art = {
@@ -313,34 +299,15 @@ def edit_art(id):
                 "summary": request.form.get("summary"),
                 "website": request.form.get("website"),
                 "image": request.form.get("cover"),
-                "reviews": int(0),
-                "favorites": int(0)
-            }
-        # check if cover url is preperly formatted
-        # if not - reload the page but save user's inputs
-        if not request.form.get("cover").endswith(('jpeg', 'png', 'jpg')):
-            flash("Please enter a valid url!")
-            result = {
-                "title": request.form.get("title"),
-                "author": request.form.get("author"),
-                "year": int(request.form.get("year")),
-                "country": request.form.get("country"),
-                "category": request.form.get("category"),
-                "is_explicit": request.form.get("is_explicit"),
-                "summary": request.form.get("summary"),
-                "website": request.form.get("website"),
-                "image": "",
-                "reviews": int(0),
-                "favorites": int(0)
-            }
-            return render_template(
-                "edit_art.html", result=result, categories=categories)
+                "reviews": reviews,
+                "favorites": favorites,
+                "is_approved": bool(True)
+        }
+        mongo.db.art.update({"_id": ObjectId(id)}, art)
+        flash("Your Review Was Successfully Edited")
+        return redirect(url_for("artpiece", id=id))
 
-        else:
-            mongo.db.art.insert_one(art)
-            flash("Your Review Was Successfully Added")
-            return render_template("home.html")
-    return render_template("edit_art.html", result=result, categories=categories)
+    return render_template("edit_art.html", art=art, categories=categories)
 
 
 @app.route("/artpiece/<id>", methods=["GET", "POST"])
@@ -369,7 +336,7 @@ def artpiece(id):
             flash("Your Review Was Successfully Added")
             return redirect(url_for("artpiece", id=id))
         else:
-            flash("Please log in to leave a review")
+            flash("Please Log In To Leave A Review")
             return redirect(url_for("login"))
 
     return render_template("artpiece.html", item=item, reviews=reviews)
@@ -385,7 +352,7 @@ def add_favorite(id):
         {"$push": {"favorites": ObjectId(id)}})
     mongo.db.art.update_one({"_id": ObjectId(id)},
         {"$inc": {"favorites": 1}})
-    flash("This art piece has been saved to your favorites!")
+    flash("This Art Piece Has Been Saved To Your Favorites")
     return redirect(request.referrer)
 
 
@@ -398,14 +365,14 @@ def remove_favorite(id):
         {"$pull": {"favorites": ObjectId(id)}})
     mongo.db.art.update_one({"_id": ObjectId(id)},
         {"$inc": {"favorites": -1}})
-    flash("This art piece has been removed from your favorites!")
+    flash("This Art Piece Has Been Removed From Your Favorites")
     return redirect(url_for("profile", username=session["user"]))
 
 
 @app.route("/category/<category>")
 def category(category):
     # display all records for each category
-    art = list(mongo.db.art.find({"category": category}))
+    art = list(mongo.db.art.find({"category": category, "is_approved": True}))
     return render_template("category.html", art=art, category=category)
 
 
@@ -423,10 +390,12 @@ def suggestions():
                 "summary": request.form.get("summary"),
                 "website": request.form.get("website"),
                 "image": request.form.get("cover"),
-                "is_approved": bool(False)
+                "is_approved": bool(False),
+                "reviews": int(0),
+                "favorites": int(0)
         }
         mongo.db.art.insert_one(suggestion)
-        flash("Thank You! Your suggestions is being reviewed!")
+        flash("Thank You! Your Suggestion Is Being Reviewed")
         return redirect(url_for("home"))
     categories = list(mongo.db.categories.find().sort("category_name", 1))
     return render_template("suggestions.html", categories=categories)

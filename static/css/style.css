@@ -58,6 +58,10 @@ h1, h2, h3, h4 {
     background-color: rgba(255, 255, 255, 0.5);
 }
 
+.br-8px {
+    border-radius: 8px;
+}
+
 
 /*------ PRELOADER -----*/
 #preloader {
@@ -192,7 +196,7 @@ nav #account-dropdown li:hover {
 .library {
     padding-bottom: 3px;
     padding-top: 3px;
-    border-radius: 15px;
+    border-radius: 8px;
 }
 
 /* HR */
@@ -320,6 +324,7 @@ hr.divider::before {
     margin: 0 auto;
     align-self: center;
     justify-items: center;
+    border-radius: 8px;
 }
 
 .card-list li {
@@ -328,7 +333,8 @@ hr.divider::before {
 }
 
 .card-list li p {
-    line-height: 0.5;
+    line-height: 1;
+    margin: 7px auto;
 }
 
 .card-list li figure {
@@ -443,38 +449,21 @@ hr.divider::before {
     padding: 3em;
 }
 
-.add-border {
-    border: 1px solid #CFEBDF;
-}
-
-.add-height {
-    height: 200px;
-}
-
- .form-label {
+.input-field > label {
     color: #000;
-    font-weight: bold;
-    font-size: 20px;
+    font-weight: bolder;
 }
 
-.suggestion-form .blue-grey {
-    font-family: 'Montserrat', sans-serif !important;
-    font-size: 20px !important;
+.suggestion-form .btn-large {
+    font-family: "Montserrat", sans-serif;
+    font-size: 20px;
     font-weight: bold;
     text-transform: none;
     margin-top: 20px;
 }
 
-#override-materialize .select-wrapper input.select-dropdown {
-    font-family: 'Montserrat', sans-serif !important;
-    font-size: 20px !important;
-    font-weight: bold;
-    color: #000;
-}
-
-::-webkit-input-placeholder {
-    color: #000;
-    font-size: 20px;
+.small-img {
+    height: 100px;
 }
 
 /* COLLECTION */

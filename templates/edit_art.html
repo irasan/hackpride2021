@@ -1,63 +1,107 @@
 {% extends "base.html" %}
 {% block content %}
 
-<h3>Edit an Art Piece</h3>
+<h3 class="white-opacity-bg center-align">Edit an Art Piece</h3>
 
-<div class="row">
-    <form class="col s12" method="POST" action="{{ url_for('edit_art') }}">
+<div class="row white-opacity-bg suggestion-form">
+    <form id="override-materialize" class="col s12 m8 offset-m2" method="POST" action="{{ url_for('edit_art', id=art._id) }}">
+
         <!-- Title -->
-        <div class="mb-3">
-            <label for="title" class="form-label">Title</label>
-            <input type="text" name="title" class="form-control" id="title" value="{{ result.title }}" minlength="3" maxlength="100">
+        <div class="input-field col s12">
+            <label for="title" class="form-label">Title <span class="red-text">*</span></label>
+            <input type="text" name="title" value="{{ art.title }}" class="form-control validate"
+                id="title" minlength="3" maxlength="100" required>
         </div>
+
         <!-- Author -->
-        <div class="mb-3">
-            <label for="author" class="form-label">Author</label>
-            <input type="text" name="author" class="form-control" id="author" value="{{ result.author }}" minlength="5" maxlength="50">
+        <div class="input-field col s12">
+            <label for="author" class="form-label">Author <span class="red-text">*</span></label>
+            <input type="text" name="author" value="{{ art.author }}" class="form-control validate"
+                id="author" minlength="5" maxlength="50" required>
         </div>
+
         <!-- Year -->
-        <div class="mb-3">
-            <label for="year" class="form-label">Year</label>
-            <input type="text" name="year" class="form-control" id="year" value="{{ result.year }}">
+        <div class="input-field col s12 m6">
+            <label for="year" class="form-label">Year <span class="red-text">*</span></label>
+            <input type="number" name="year" value="{{ art.year }}" pattern="^[0-9]{4}$" min="1800" max="2099"
+                class="form-control validate" id="year" required>
         </div>
+
         <!-- Country -->
-        <div class="mb-3">
-            <label for="country" class="form-label">Country</label>
-            <input type="text" name="country" class="form-control" id="country" value="{{ result.country }}">
+        <div class="input-field col s12 m6">
+            <label for="country" class="form-label">
+                Country <span class="red-text">*</span>
+                <small class="grey-text text-darken-2">( 2-letter code )</small>
+            </label>
+            <input type="text" name="country" value="{{ art.country }}" pattern="^[a-zA-Z]{2}$" minlength="2" maxlength="2"
+                class="form-control validate" id="country" required>
         </div>
-        <!-- Summary -->
-        <div class="mb-3">
-            <label for="summary" class="form-label">Summary</label>
-            <textarea type="text" name="summary" class="materialize-textarea form-control" id="summary" value="{{ result.summary }}"></textarea>
-        </div>
+
         <!-- Category -->
-        <div class="mb-3">
-            <select class="form-select" name="category" aria-label="form-select-lg">
-                <option selected>Pick a category</option>
+        <div class="input-field col s12 m6">
+            <select class="form-select validate" name="category" required>
+                <option disabled selected>Choose a category</option>
                 {% for cat in categories %}
-                <option value="{{ cat.category_name }}">{{ cat.category_name }}</option>
+                    {% if cat.category_name == art.category %}
+                        <option value="{{ cat.category_name }}" selected>{{ cat.category_name|title }}</option>
+                    {% else %}
+                        <option value="{{ cat.category_name }}">{{ cat.category_name|title }}</option>
+                    {% endif %}
                 {% endfor %}
             </select>
+            <label for="category" class="form-label">Category <span class="red-text">*</span></label>
         </div>
+
         <!-- Explicity -->
-        <div class="mb-3">
-            <select class="form-select" name="is_explicit" aria-label="form-select-lg">
-                <option selected>Is it explicit?</option>
-                <option value="True">Yes</option>
-                <option value="False">No</option>
+        <div class="input-field col s12 m6">
+            <select class="form-select validate" name="is_explicit" required>
+                <option disabled selected>Choose Option</option>
+                {% if art.is_explicit == "True" %}
+                    <option value="True" selected>Yes</option>
+                    <option value="False">No</option>
+                {% elif art.is_explicit == "False" %}
+                    <option value="True">Yes</option>
+                    <option value="False" selected>No</option>
+                {% else %}
+                    <option value="True">Yes</option>
+                    <option value="False">No</option>
+                {% endif %}
             </select>
+            <label for="is_explicit" class="form-label">Is it explicit? <span class="red-text">*</span></label>
         </div>
-        <!-- Cover upload -->
-        <div class="mb-3">
-            <label for="cover" class="form-label">Paste cover url here</label>
-            <input type="text" name="cover" class="form-control" id="cover">
+
+        <!-- Summary -->
+        <div class="input-field col s12">
+            <label for="summary" class="form-label">Summary <span class="red-text">*</span></label>
+            <textarea type="text" name="summary" class="materialize-textarea form-control validate" minlength="10"
+                maxlength="999" id="summary" required>{{- art.summary -}}</textarea>
         </div>
+
         <!-- Website -->
-        <div class="mb-3">
+        <div class="input-field col s12">
             <label for="website" class="form-label">Website</label>
-            <input type="text" name="website" class="form-control" id="website" value="{{ result.website }}">
+            <input type="url" name="website" value="{{ art.website }}" class="form-control validate" id="website" required>
         </div>
-        <button type="submit" class="btn btn-primary">Edit</button>
+
+        <!-- Cover upload -->
+        <div class="input-field col s12 m6">
+            <label for="cover" class="form-label">Cover Image URL</label>
+            <input type="url" name="cover" value="{{ art.image }}" class="form-control validate" id="cover">
+        </div>
+
+        <!-- Preview Image -->
+        <div id="img_new" class="col s12 m6 center-align">
+            <img src="{{ art.image }}" alt="" class="small-img">
+        </div>
+
+        <!-- Submit -->
+        <div class="col s12">
+            <button class="btn-large bold blue-grey darken-4 white-text" type="submit">
+                Edit
+                <span class="ml-1"><i class="far fa-paper-plane"></i></span>
+            </button>
+        </div>
+
     </form>
 </div>
 
