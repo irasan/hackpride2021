@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+{% block content %}
+
+<h3>Add Art</h3>
+<a href="{{ url_for('add_art') }}" class="btn-large bold blue-grey darken-4 white-text">Add New Art</a>
+
+<h3>Pending Suggestions</h3>
+
+{% if pending|length > 0 %}
+    <ul class="collection" id="admin-collection">
+        {% for item in pending %}
+            <li class="collection-item avatar">
+                <img src="{{ item.image }}" alt="{{ item.title }}" class="circle">
+                <span class="title bold">Title: {{ item.title }}</span>
+                <p>
+                    Author: {{ item.author }}<br>
+                    Year: {{ item.year }}<br>
+                    Country: {{ item.country }}<br>
+                    Category: {{ item.category }}<br>
+                    Explicit: {{ item.is_explicit }}<br>
+                    Website: <a href="{{ item.website }}" target="_blank">{{ item.website }}</a><br><br>
+                    Summary: {{ item.summary }}
+                </p>
+                <a href="" class="secondary-content center-align green-text bold">
+                    <i class="fas fa-user-check"></i>
+                    <br>
+                    Approve
+                </a>
+            </li>
+        {% endfor %}
+    </ul>
+{% else %}
+    No Pending Suggestions
+{% endif %}
+
+{% endblock %}

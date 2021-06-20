@@ -2,6 +2,10 @@
 <ul id="account-dropdown" class="dropdown-content blue-grey darken-4 text-shadow-none">
     {% if session.user %}
     <!-- user is logged-in -->
+        {% if session.is_admin %}
+            <!-- user is_admin = True -->
+            <li><a href="{{ url_for('admin') }}">Admin</a></li>
+        {% endif %}
         <li><a href="{{ url_for('profile', username=session['user']) }}">Profile</a></li>
         <li><a href="{{ url_for('logout') }}">Log Out</a></li>
     {% else %}
@@ -52,6 +56,10 @@
         <li class="divider"></li>
         <li><a href="{{ url_for('suggestions') }}" class="bold">Make a Suggestion</a></li>
         <li class="divider"></li>
+        {% if session.is_admin %}
+            <!-- user is_admin = True -->
+            <li><a href="{{ url_for('admin') }}">Admin</a></li>
+        {% endif %}
         <li><a href="{{ url_for('profile', username=session['user']) }}" class="bold">Profile</a></li>
         <li><a href="{{ url_for('logout') }}" class="bold">Log Out</a></li>
     {% else %}

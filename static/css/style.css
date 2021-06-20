@@ -59,6 +59,31 @@ h1, h2, h3, h4 {
 }
 
 
+/*------ PRELOADER -----*/
+#preloader {
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 1000;
+    height: 100%;
+    width: 100%;
+    text-align: center;
+    color: black;
+    background: white;
+}
+
+#loader {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+#loader img {
+    width: 25vw;
+}
+
+
 /* AVATARS */
 .avatar {
     height: 1em;
@@ -69,6 +94,11 @@ h1, h2, h3, h4 {
 /* NAVBAR */
 nav .brand-logo {
     padding-left: 1em;
+}
+
+.main-logo {
+    vertical-align: middle;
+    margin: 0.5em auto;
 }
 
 #category-menu {
@@ -218,9 +248,13 @@ hr.divider::before {
     z-index: 100;
     top: 4em;
     font-size: 2em;
-    background-color: rgba(0, 0, 0, 0.90);
-    border: 1em solid transparent;
-    border-image: linear-gradient(to bottom right, #b827fc 0%, #2c90fc 25%, #b8fd33 50%, #fec837 75%, #fd1892 100%);
+    background-color: rgba(255, 255, 255, 0.90);
+    border: 0.25em solid transparent;
+    border-image: linear-gradient(90deg, rgba(24, 24, 24, 0.85) 12.5%,
+        rgba(120, 79, 23, 0.85) 12.5%, 25%, rgba(254, 0, 0, 0.85) 25%, 37.5%,
+        rgba(253, 140, 0, 0.85) 37.5%, 50%, rgba(255, 229, 0, 0.85) 50%, 62.5%,
+        rgba(17, 159, 11, 0.85) 62.5%, 75%, rgba(6, 68, 179, 0.85) 75%, 87.5%,
+        rgba(194, 46, 220, 0.85) 87.5%);
     border-image-slice: 1;
 }
 
@@ -382,25 +416,13 @@ hr.divider::before {
 }
 
 
-/* BACKGROUNDS */
-.pride-flag {
-    height: 100vh;
-    background: url('../images/rainbow_flag_small.jpg') no-repeat;
-    -webkit-background-size: cover;
-    -moz-background-size: cover;
-    -o-background-size: cover;
-    background-size: cover;
-    position: relative;
-    display: flex;
-    justify-content: center;
-}
-
 /* REVIEWS */
 .review-bubble {
     border: 1px solid #000;
     background: #fff;
     margin-bottom: 10px;
 }
+
 
 /* FORM */
 .suggestion-form {
@@ -440,6 +462,22 @@ hr.divider::before {
     color: #000;
     font-size: 20px;
 }
+
+/* COLLECTION */
+.collection .collection-item.avatar:not(.circle-clipper)>.circle,
+.collection .collection-item.avatar :not(.circle-clipper)>.circle {
+    width: unset;
+    height: 60px;
+}
+
+li.collection-item.avatar img.circle {
+    border-radius: unset;
+}
+
+#admin-collection.collection .collection-item.avatar {
+    height: auto;
+}
+
 
 /* MEDIA QUERIES */
 @media only screen and (max-width: 370px) {
