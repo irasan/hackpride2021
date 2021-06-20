@@ -11,6 +11,7 @@
     <p class="black-text bold">{{ item.title|truncate(50) }}</p>
     <p class="grey-text text-darken-1 bold">{{ item.author|truncate(50) }}</p>
     <p class="black-text bold">
-        <img src="https://www.countryflags.io/{{ item.country }}/flat/24.png" alt="{{ item.country }}">
+        <img src="https://www.countryflags.io/{{ item.country }}/flat/24.png" alt="{{ item.country }}" class="flag">
+        {{ item.year }}
     </p>
 </li>

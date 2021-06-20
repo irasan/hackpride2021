@@ -81,23 +81,23 @@
 <nav id="category-menu">
     <div class="nav-wrapper blue-grey darken-2 text-shadow">
         <div class="col s12">
-            <a href="{{ url_for('category', category='artwork') }}">
+            <a href="{{ url_for('category', category='artwork') }}" id="artwork-nav" class="subnav">
                 <span class="hide-on-small-only bold">Artwork</span>
                 <i class="fas fa-palette hide-on-med-and-up"></i>
             </a>
-            <a href="{{ url_for('category', category='books') }}">
+            <a href="{{ url_for('category', category='books') }}" id="book-nav" class="subnav">
                 <span class="hide-on-small-only bold">Books</span>
                 <i class="fas fa-book hide-on-med-and-up"></i>
             </a>
-            <a href="{{ url_for('category', category='movies') }}">
+            <a href="{{ url_for('category', category='movies') }}" id="movie-nav" class="subnav">
                 <span class="hide-on-small-only bold">Movies</span>
                 <i class="fas fa-film hide-on-med-and-up"></i>
             </a>
-            <a href="{{ url_for('category', category='music') }}">
+            <a href="{{ url_for('category', category='music') }}" id="music-nav" class="subnav">
                 <span class="hide-on-small-only bold">Music</span>
                 <i class="fas fa-music hide-on-med-and-up"></i>
             </a>
-            <a href="{{ url_for('category', category='podcasts') }}">
+            <a href="{{ url_for('category', category='podcasts') }}" id="podcast-nav" class="subnav">
                 <span class="hide-on-small-only bold">Podcasts</span>
                 <i class="fas fa-podcast hide-on-med-and-up"></i>
             </a>
