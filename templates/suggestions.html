@@ -3,43 +3,53 @@
 
 
 <div class="row white-opacity-bg black-text">
-    <div class="col s12 m6 offset-m3">
+    <div class="col s12 m8 offset-m2">
         <h3 class="center-align">
-            Do you know any amazing work you would like us to add to the database?
+            Do you know any amazing work you would like us to add to the collection?
         </h3>
         <h3 class="center-align">Send us your suggestion!</h3>
     </div>
 </div>
 
 <div class="row white-opacity-bg suggestion-form">
-    <form id="override-materialize" class="col s12 m6 offset-m3" method="POST" action="{{ url_for('suggestions') }}">
+    <form id="override-materialize" class="col s12 m8 offset-m2" method="POST" action="{{ url_for('suggestions') }}">
         <!-- Title -->
-        <div class="mb-3">
+        <div class="col s12">
             <label for="title" class="form-label">Title</label>
             <input type="text" name="title" class="form-control" id="title" minlength="3" maxlength="100" required>
-        
+        </div>
         <!-- Author -->
-        <div class="mb-3">
+        <div class="col s12">
             <label for="author" class="form-label">Author</label>
             <input type="text" name="author" class="form-control" id="author" minlength="5" maxlength="50" required>
-        
+        </div>
         <!-- Year -->
-        <div class="mb-3">
+        <div class="col s6">
             <label for="year" class="form-label">Year</label>
-            <input type="number" name="year" minlength="4" maxlength="4" class="form-control" id="year" required>
-        
+            <input type="number" name="year" pattern="^[0-9]{4}$" min="1800" max="2099" class="form-control validate" id="year" required>
+        </div>
         <!-- Country -->
-        <div class="mb-3">
-            <label for="country" class="form-label">Country (2-letters)</label>
-            <input type="text" name="country" pattern="^[a-zA-Z]{2}$" minlength="2" maxlength="2" class="form-control" id="country" required>
-        
+        <div class="col s6">
+            <label for="country" class="form-label">Country</label>
+            <input placeholder="DE" type="text" name="country" pattern="^[a-zA-Z]{2}$" minlength="2" maxlength="2" class="form-control" id="country" required>
+        </div>
         <!-- Summary -->
-        <div class="mb-3">
+        <div class="col s12">
             <label for="summary" class="form-label">Summary</label>
             <textarea type="text" name="summary" class="materialize-textarea form-control" id="summary" required></textarea>
-        
+        </div>
+        <!-- Cover upload -->
+        <div class="col s12">
+            <label for="cover" class="form-label">Paste cover url here</label>
+            <input type="url" name="cover" class="form-control" id="cover">
+        </div>
+        <!-- Website -->
+        <div class="col s12">
+            <label for="website" class="form-label">Website</label>
+            <input type="url" name="website" class="form-control" id="website">
+        </div>
         <!-- Category -->
-        <div class="mb-3">
+        <div class="col s6">
             <select class="form-select" name="category" aria-label="form-select-lg">
                 <option selected>Pick a category</option>
                 {% for cat in categories %}
@@ -48,25 +58,26 @@
             </select>
         </div>
         <!-- Explicity -->
-        <div class="mb-3">
+        <div class="col s6">
             <select class="form-select" name="is_explicit" aria-label="form-select-lg">
                 <option selected>Is it explicit?</option>
                 <option value="True">Yes</option>
                 <option value="False">No</option>
             </select>
         </div>
-        <!-- Cover upload -->
-        <div class="mb-3">
-            <label for="cover" class="form-label">Paste cover url here</label>
-            <input type="url" name="cover" class="form-control" id="cover">
-        </div>
-        <!-- Website -->
-        <div class="mb-3">
-            <label for="website" class="form-label">Website</label>
-            <input type="url" name="website" class="form-control" id="website">
-        </div>
         <!-- Submit -->
-        <button type="submit" class="waves-effect btn-flat">Add</button>
+        <div class="col s12">
+            <div class="col">
+                <button
+                  class="btn bold blue-grey darken-4 white-text"
+                  type="submit"
+                  name="action"
+                >
+                  Add
+                  <span class="ml-1"><i class="far fa-paper-plane"></i></span>
+                </button>
+        </div>
+        
     </form>
 </div>
 
