@@ -19,6 +19,12 @@ $(document).ready(function () {
     }
     flashToast();
 
+    // check for valid image to display on entry
+    $("input#cover.validate").blur(function () {
+        // add image tag, with fallback option for no-image.png default image
+        $("#img_new").empty().prepend(`<img class="small-img" src="${$(this).val()}" onError="this.onerror=null;this.src='../../../static/images/no_img.png';">`);
+    });
+
     // passwords must match
     $("#register").attr("disabled", true);
     let password = "";
