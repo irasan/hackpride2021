@@ -395,7 +395,7 @@ def remove_favorite(id):
 def category(category):
     # display all records for each category
     art = list(mongo.db.art.find({"category": category}))
-    return render_template("category.html", art=art)
+    return render_template("category.html", art=art, category=category)
 
 
 @app.route("/suggestions", methods=["GET", "POST"])
