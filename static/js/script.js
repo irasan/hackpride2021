@@ -74,3 +74,8 @@ $(document).ready(function () {
  $(document).ready(function(){
     $('.modal').modal();
   });
+
+// resizng of text input for reviews
+$('#review').val('');
+  M.textareaAutoResize($('#review'));
+    
