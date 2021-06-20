@@ -418,23 +418,28 @@ hr.divider::before {
  .form-label {
     color: #000;
     font-weight: bold;
+    font-size: 20px;
 }
 
-.suggestion-form .btn-flat {
+.suggestion-form .blue-grey {
     font-family: 'Montserrat', sans-serif !important;
-    font-size: 12px !important;
+    font-size: 20px !important;
     font-weight: bold;
     text-transform: none;
-    color: #000;
+    margin-top: 20px;
 }
 
 #override-materialize .select-wrapper input.select-dropdown {
     font-family: 'Montserrat', sans-serif !important;
-    font-size: 12px !important;
+    font-size: 20px !important;
     font-weight: bold;
     color: #000;
 }
 
+::-webkit-input-placeholder {
+    color: #000;
+    font-size: 20px;
+}
 
 /* MEDIA QUERIES */
 @media only screen and (max-width: 370px) {
