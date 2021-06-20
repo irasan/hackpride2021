@@ -409,6 +409,18 @@ hr.divider::before {
     height: 200px;
 }
 
+.suggestion-form, .form-label, .make-black {
+    color: #000;
+}
+
+.suggestion-form, .btn-flat, .dropdown-trigger{
+    font-family: 'Montserrat', sans-serif !important;
+    font-size: 12px !important;
+    font-weight: bold;
+    text-transform: none;
+    
+}
+
 /* MEDIA QUERIES */
 @media only screen and (max-width: 370px) {
     nav .brand-logo {
