@@ -5,7 +5,7 @@
 {% for item in art|reverse %}
 
 <div class="col s12 m6 l3">
-    <ul class=" white library">
+    <ul class="white library">
         <div class="card-list">
         <li><figure>
             <img src="{{ item.image }}" alt="{{ item.title }}" onerror="this.onerror=null;this.src='{{ url_for('static', filename='images/no_img.png') }}';">
