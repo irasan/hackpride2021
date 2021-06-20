@@ -28,7 +28,8 @@
                 </div>
             </div>
         </div>
-        <a class="waves-effect waves-light btn" href="{{ url_for('add_favorite', id=item._id) }}">Save to favorites</a>
+        <a class="btn purple accent-2 black-text bold text-shadow hoverable "
+            href="{{ url_for('add_favorite', id=item._id) }}">Save to favorites</a>
     </div>
 
 
@@ -44,8 +45,9 @@
         {% else %}
         <h5>There's no reviews yet. Be the first one to share your thoughts!</h5>
         {% endif %}
-        <span class="right"><a class="waves-effect btn-small modal-trigger" href="#add_review">Add
-                    review</a></span>
+        <span class="right"><a class="btn-small green accent-3 black-text bold text-shadow hoverable modal-trigger"
+                href="#add_review">Add
+                review</a></span>
     </div>
 
     <!-- Modal for adding reviews -->
@@ -53,7 +55,10 @@
         <div class="modal-content">
             <h4>Leave your comment below:</h4>
             <form method="POST" action="{{ url_for('artpiece', id=item._id) }}">
-                <textarea type="text" name="review" id="review"></textarea>
+                <div class="input-field">
+                    <textarea class="materialize-textarea" type="text" name="review" id="review" minlength="10"
+                    maxlength="100" required></textarea>
+                </div>
             </form>
         </div>
         <div class="modal-footer">
