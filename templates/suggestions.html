@@ -13,70 +13,88 @@
 
 <div class="row white-opacity-bg suggestion-form">
     <form id="override-materialize" class="col s12 m8 offset-m2" method="POST" action="{{ url_for('suggestions') }}">
+
         <!-- Title -->
-        <div class="col s12">
-            <label for="title" class="form-label">Title</label>
-            <input type="text" name="title" class="form-control" id="title" minlength="3" maxlength="100" required>
+        <div class="input-field col s12">
+            <label for="title" class="form-label">Title <span class="red-text">*</span></label>
+            <input type="text" name="title" class="form-control validate" id="title" minlength="3" maxlength="100" required>
         </div>
+
         <!-- Author -->
-        <div class="col s12">
-            <label for="author" class="form-label">Author</label>
+        <div class="input-field col s12">
+            <label for="author" class="form-label">Author <span class="red-text">*</span></label>
             <input type="text" name="author" class="form-control validate" id="author" minlength="5" maxlength="50" required>
-        
+        </div>
+
         <!-- Year -->
-        <div class="col s6">
-            <label for="year" class="form-label">Year</label>
-            <input type="number" name="year" pattern="^[0-9]{4}$" min="1800" max="2099" class="form-control validate" id="year" required>
+        <div class="input-field col s12 m6">
+            <label for="year" class="form-label">Year <span class="red-text">*</span></label>
+            <input type="number" name="year" pattern="^[0-9]{4}$" min="1800" max="2099"
+                class="form-control validate" id="year" required>
         </div>
-        
+
         <!-- Country -->
-        <div class="col s6">
-            <label for="country" class="form-label">Country</label>
-            <input placeholder="DE" type="text" name="country" pattern="^[a-zA-Z]{2}$" minlength="2" maxlength="2" class="form-control" id="country" required>
+        <div class="input-field col s12 m6">
+            <label for="country" class="form-label">
+                Country <span class="red-text">*</span>
+                <small class="grey-text text-darken-2">( 2-letter code )</small>
+            </label>
+            <input type="text" name="country" pattern="^[a-zA-Z]{2}$" minlength="2" maxlength="2"
+                class="form-control validate" id="country" required>
         </div>
-        <!-- Summary -->
-        <div class="col s12">
-            <label for="summary" class="form-label">Summary</label>
-            <textarea type="text" name="summary" class="materialize-textarea form-control" id="summary" required></textarea>
-        </div>
-        <!-- Cover upload -->
-        <div class="col s12">
-            <label for="cover" class="form-label">Paste cover url here</label>
-            <input type="url" name="cover" class="form-control" id="cover">
-        </div>
-        <!-- Website -->
-        <div class="col s12">
-            <label for="website" class="form-label">Website</label>
-            <input type="url" name="website" class="form-control" id="website">
-        </div>
+
         <!-- Category -->
-        <div class="col s6">
-            <select class="form-select" name="category" aria-label="form-select-lg">
-                <option selected>Pick a category</option>
+        <div class="input-field col s12 m6">
+            <select class="form-select validate" name="category" required>
+                <option disabled selected>Choose a category</option>
                 {% for cat in categories %}
-                <option value="{{ cat.category_name }}">{{ cat.category_name|title }}</option>
+                    <option value="{{ cat.category_name }}">{{ cat.category_name|title }}</option>
                 {% endfor %}
             </select>
+            <label for="category" class="form-label">Category <span class="red-text">*</span></label>
         </div>
+
         <!-- Explicity -->
-        <div class="col s6">
-            <select class="form-select" name="is_explicit" aria-label="form-select-lg">
-                <option selected>Is it explicit?</option>
+        <div class="input-field col s12 m6">
+            <select class="form-select validate" name="is_explicit" required>
+                <option disabled selected>Choose Option</option>
                 <option value="True">Yes</option>
                 <option value="False">No</option>
             </select>
+            <label for="is_explicit" class="form-label">Is it explicit? <span class="red-text">*</span></label>
         </div>
+
+        <!-- Summary -->
+        <div class="input-field col s12">
+            <label for="summary" class="form-label">Summary <span class="red-text">*</span></label>
+            <textarea type="text" name="summary" class="materialize-textarea form-control validate" minlength="10"
+                maxlength="400" id="summary" required></textarea>
+        </div>
+
+        <!-- Website -->
+        <div class="input-field col s12">
+            <label for="website" class="form-label">Website</label>
+            <input type="url" name="website" class="form-control validate" id="website" required>
+        </div>
+
+        <!-- Cover upload -->
+        <div class="input-field col s12 m6">
+            <label for="cover" class="form-label">Cover Image URL</label>
+            <input type="url" name="cover" class="form-control validate" id="cover">
+        </div>
+
+        <!-- Preview Image -->
+        <div id="img_new" class="col s12 m6 center-align"></div>
+
         <!-- Submit -->
         <div class="col s12">
-            <button class="btn bold blue-grey darken-4 white-text" type="submit" name="action">
+            <button class="btn-large bold blue-grey darken-4 white-text" type="submit">
                 Add
                 <span class="ml-1"><i class="far fa-paper-plane"></i></span>
             </button>
         </div>
-        
+
     </form>
 </div>
-
-
 
 {% endblock %}
