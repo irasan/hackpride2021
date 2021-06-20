@@ -67,6 +67,10 @@ h1, h2, h3, h4 {
     background-color: rgba(0, 0, 0, 0.5);
 }
 
+.white-opacity-bg {
+    border-radius: 8px;
+    background-color: rgba(255, 255, 255, 0.5);
+}
 
 /*------ PRELOADER -----*/
 #preloader {
