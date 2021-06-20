@@ -409,17 +409,26 @@ hr.divider::before {
     height: 200px;
 }
 
-.suggestion-form, .form-label, .make-black {
+ .form-label {
     color: #000;
+    font-weight: bold;
 }
 
-.suggestion-form, .btn-flat, .dropdown-trigger{
+.suggestion-form .btn-flat {
     font-family: 'Montserrat', sans-serif !important;
     font-size: 12px !important;
     font-weight: bold;
     text-transform: none;
-    
+    color: #000;
 }
+
+#override-materialize .select-wrapper input.select-dropdown {
+    font-family: 'Montserrat', sans-serif !important;
+    font-size: 12px !important;
+    font-weight: bold;
+    color: #000;
+}
+
 
 /* MEDIA QUERIES */
 @media only screen and (max-width: 370px) {

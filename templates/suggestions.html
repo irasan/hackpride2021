@@ -3,7 +3,7 @@
 
 
 <div class="row white-opacity-bg black-text">
-    <div class="col s12 m8 offset-m2 l10 offset-l1">
+    <div class="col s12 m6 offset-m3">
         <h3 class="center-align">
             Do you know any amazing work you would like us to add to the database?
         </h3>
@@ -12,26 +12,26 @@
 </div>
 
 <div class="row white-opacity-bg suggestion-form">
-    <form class="col s12" method="POST" action="{{ url_for('suggestions') }}">
+    <form id="override-materialize" class="col s12 m6 offset-m3" method="POST" action="{{ url_for('suggestions') }}">
         <!-- Title -->
             <label for="title" class="form-label">Title</label>
-            <input type="text" name="title" class="form-control" id="title" minlength="3" maxlength="100">
+            <input type="text" name="title" class="form-control" id="title" minlength="3" maxlength="100" required>
         
         <!-- Author -->
             <label for="author" class="form-label">Author</label>
-            <input type="text" name="author" class="form-control" id="author" minlength="5" maxlength="50">
+            <input type="text" name="author" class="form-control" id="author" minlength="5" maxlength="50" required>
         
         <!-- Year -->
             <label for="year" class="form-label">Year</label>
-            <input type="number" name="year" minlength="4" maxlength="4" class="form-control" id="year">
+            <input type="number" name="year" minlength="4" maxlength="4" class="form-control" id="year" required>
         
         <!-- Country -->
             <label for="country" class="form-label">Country (2-letters)</label>
-            <input type="text" name="country" pattern="^[a-zA-Z]{2}$" minlength="2" maxlength="2" class="form-control" id="country">
+            <input type="text" name="country" pattern="^[a-zA-Z]{2}$" minlength="2" maxlength="2" class="form-control" id="country" required>
         
         <!-- Summary -->
             <label for="summary" class="form-label">Summary</label>
-            <textarea type="text" name="summary" class="materialize-textarea form-control" id="summary"></textarea>
+            <textarea type="text" name="summary" class="materialize-textarea form-control" id="summary" required></textarea>
         
         <!-- Category -->
             <select class="form-select" name="category" aria-label="form-select-lg">
