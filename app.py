@@ -1,4 +1,5 @@
 import os
+import random
 from functools import wraps
 from flask import (
     Flask, flash, render_template,
@@ -6,7 +7,7 @@ from flask import (
 from flask_pymongo import PyMongo
 from werkzeug.security import generate_password_hash, check_password_hash
 from bson.objectid import ObjectId
-from datetime import date
+from datetime import datetime
 if os.path.exists("env.py"):
     import env
 
@@ -18,6 +19,7 @@ app.config["MONGO_URI"] = os.environ.get("MONGO_URI")
 app.secret_key = os.environ.get("SECRET_KEY")
 
 mongo = PyMongo(app)
+
 
 # @login_required decorator
 # https://flask.palletsprojects.com/en/2.0.x/patterns/viewdecorators/#login-required-decorator
@@ -73,9 +75,18 @@ def home():
             podcasts.append(record)
         else:
             print("Invalid category")
+    # get a random record from each category
+    rand_artwork = random.choice(artwork)
+    rand_book = random.choice(books)
+    rand_movie = random.choice(movies)
+    rand_music = random.choice(music)
+    rand_podcast = random.choice(podcasts)
     return render_template(
         "home.html", artwork=artwork, books=books,
-        movies=movies, music=music, podcasts=podcasts
+        movies=movies, music=music, podcasts=podcasts,
+        rand_artwork=rand_artwork, rand_book=rand_book,
+        rand_movie=rand_movie, rand_music=rand_music,
+        rand_podcast=rand_podcast
     )
 
 
@@ -97,7 +108,7 @@ def register():
                     "username": request.form.get("username").lower(),
                     "password": generate_password_hash(
                         request.form.get("password")),
-                    "is_admin": False,
+                    "is_admin": bool(False),
                     "reviews": [],
                     "favorites": [],
                     "avatar": request.form.get("avatar")
@@ -274,13 +285,13 @@ def edit_art(id):
                 "favorites": int(0)
             }
             return render_template(
-                "add_art.html", result=result, categories=categories)
+                "edit_art.html", result=result, categories=categories)
 
         else:
             mongo.db.art.insert_one(art)
             flash("Your Review Was Successfully Added")
             return render_template("home.html")
-    return render_template("add_art.html", result=result, categories=categories)
+    return render_template("edit_art.html", result=result, categories=categories)
 
 
 @app.route("/artpiece/<id>", methods=["GET", "POST"])
@@ -296,15 +307,15 @@ def artpiece(id):
             user_review = {
                 "review": request.form.get("review"),
                 "username": session["user"],
-                "date": date.today(),
+                "date": datetime.now().strftime("%d %B, %Y"),
                 "item_id": ObjectId(id),
             }
             mongo.db.reviews.insert_one(user_review)
             flash("Your Review Was Successfully Added")
-            return render_template("artpiece.html", item=item, reviews=reviews)
+            return redirect(url_for("artpiece", id=id))
         else:
             flash("Please log in to leave a review")
-            return render_template("artpiece.html", item=item, reviews=reviews)
+            return redirect(url_for("login"))
 
     return render_template("artpiece.html", item=item, reviews=reviews)
 
@@ -332,6 +343,22 @@ def category(category):
 @app.route("/suggestions", methods=["GET", "POST"])
 @login_required
 def suggestions():
+    if request.method == "POST":
+        suggestion = {
+                "title": request.form.get("title"),
+                "author": request.form.get("author"),
+                "year": int(request.form.get("year")),
+                "country": request.form.get("country"),
+                "category": request.form.get("category"),
+                "is_explicit": request.form.get("is_explicit"),
+                "summary": request.form.get("summary"),
+                "website": request.form.get("website"),
+                "image": request.form.get("cover"),
+                "is_approved": bool(False)
+        }
+        mongo.db.suggestions.insert_one(suggestion)
+        flash("Thank You! Your suggestions is being reviewed!")
+        return redirect(url_for("home"))
     categories = list(mongo.db.categories.find().sort("category_name", 1))
     return render_template("suggestions.html", categories=categories)
 

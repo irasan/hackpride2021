@@ -28,7 +28,7 @@
         <!-- Summary -->
         <div class="mb-3">
             <label for="summary" class="form-label">Summary</label>
-            <textarea type="text" name="summary" class="form-control" id="summary" value="{{ result.summary }}"></textarea>
+            <textarea type="text" name="summary" class="materialize-textarea form-control" id="summary" value="{{ result.summary }}"></textarea>
         </div>
         <!-- Category -->
         <div class="mb-3">
@@ -43,8 +43,8 @@
         <div class="mb-3">
             <select class="form-select" name="is_explicit" aria-label="form-select-lg">
                 <option selected>Is it explicit?</option>
-                <option value="{{ true }}">Yes</option>
-                <option value="{{ false }}">No</option>
+                <option value="True">Yes</option>
+                <option value="False">No</option>
             </select>
         </div>
         <!-- Cover upload -->

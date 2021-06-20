@@ -1,35 +1,35 @@
 <li class="col">
-    <a href="{{ url_for('artpiece', id=item._id) }}">
-    <figure>
-        <img src="{{ item.image }}" alt="{{ item.title }}" onerror="this.onerror=null;this.src='{{ url_for('static', filename='images/no_img.png') }}';">
-        <figcaption>
-            <p class="white-text text-shadow">{{ item.author|truncate(20) }}</p>
-            <p>{{ item.year }}</p>
-        </figcaption>
-    </figure>
+    <a href="{{ url_for('artpiece', id=item._id) }}" class="white-text">
+        <figure class="hoverable">
+            <img src="{{ item.image }}" alt="{{ item.title }}" onerror="this.onerror=null;this.src='{{ url_for('static', filename='images/no_img.png') }}';">
+            <figcaption>
+                <p class="white-text text-shadow">{{ item.author|truncate(20) }}</p>
+                <p>{{ item.year }}</p>
+            </figcaption>
+        </figure>
     </a>
-    <p class="white-text bold text-shadow">{{ item.title|truncate(50) }}</p>
-    <p class="grey-text text-lighten-1 bold text-shadow">{{ item.author|truncate(50) }}</p>
-    <p class="white-text bold">
+    <p class="black-text bold">{{ item.title|truncate(50) }}</p>
+    <p class="grey-text text-darken-1 bold">{{ item.author|truncate(50) }}</p>
+    <p class="black-text bold">
         <small>
             {% if item.category == "artwork" %}
-                <a href="{{ url_for('category', category='artwork') }}" class="white-text bold text-shadow">
+                <a href="{{ url_for('category', category='artwork') }}" class="black-text bold">
                     <i class="fas fa-palette"></i> {{ item.category }}
                 </a>
             {% elif item.category == "books" %}
-                <a href="{{ url_for('category', category='books') }}" class="white-text bold text-shadow">
+                <a href="{{ url_for('category', category='books') }}" class="black-text bold">
                     <i class="fas fa-book"></i> {{ item.category }}
                 </a>
             {% elif item.category == "movies" %}
-                <a href="{{ url_for('category', category='movies') }}" class="white-text bold text-shadow">
+                <a href="{{ url_for('category', category='movies') }}" class="black-text bold">
                     <i class="fas fa-film"></i> {{ item.category }}
                 </a>
             {% elif item.category == "music" %}
-                <a href="{{ url_for('category', category='music') }}" class="white-text bold text-shadow">
+                <a href="{{ url_for('category', category='music') }}" class="black-text bold">
                     <i class="fas fa-music"></i> {{ item.category }}
                 </a>
             {% elif item.category == "podcasts" %}
-                <a href="{{ url_for('category', category='podcasts') }}" class="white-text bold text-shadow">
+                <a href="{{ url_for('category', category='podcasts') }}" class="black-text bold">
                     <i class="fas fa-podcast"></i> {{ item.category }}
                 </a>
             {% endif %}

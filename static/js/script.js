@@ -2,6 +2,7 @@ $(document).ready(function () {
     $(".dropdown-trigger").dropdown(); // navbar dropdown
     $(".sidenav").sidenav({edge: "right"}); // mobile sidenav
     $("select").formSelect(); // select dropdowns
+    $(".modal").modal();  // modals
 
     // custom flash messages
     function flashToast() {
@@ -69,13 +70,3 @@ $(document).ready(function () {
         });
     }
 });
-
-// modal for adding reviews
- $(document).ready(function(){
-    $('.modal').modal();
-  });
-
-// resizng of text input for reviews
-$('#review').val('');
-  M.textareaAutoResize($('#review'));
-    
