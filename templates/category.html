@@ -5,17 +5,18 @@
 {% for item in art|reverse %}
 
 <div class="col s12 m6 l3">
-
-    <ul>
-        <li>
+    <ul class="white library">
+        <div class="card-list">
+        <li><figure>
             <img src="{{ item.image }}" alt="{{ item.title }}" onerror="this.onerror=null;this.src='{{ url_for('static', filename='images/no_img.png') }}';">
-        </li>
-        <li><p class="white-text text-shadow">{{ item.title|truncate(20) }}</p></li>
-        <li><p class="white-text text-shadow">{{ item.author|truncate(20) }}</p></li>
-        <li><p>{{ item.year }}</p></li>     
+        </figure></li>
+        <li><p class="text-shadow">{{ item.title|truncate(20) }}</p></li>
+        <li><p class="text-shadow">{{ item.author|truncate(20) }}</p></li>
+        <li><p class="text-shadow">{{ item.year }}</p></li>
+          
+    </div>
     </ul>
 </div>
-
 {% endfor %}
 </div>
 {% endblock %}
