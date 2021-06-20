@@ -1,38 +1,55 @@
 {% extends "base.html" %}
 {% block content %}
 
-<div>
-<h1>The
-<span class="pink-text font-gilbert">R</span><span class="purple-text font-gilbert">a</span><span class="blue-text text-darken-2 font-gilbert">i</span><span class="light-green-text text-accent-3 font-gilbert">n</span><span class="yellow-text text-accent-2 font-gilbert">b</span><span class="orange-text font-gilbert">o</span><span class="red-text font-gilbert">w</span>
-Collection
-</h1>
-</div>
-
-<!--ABOUT THE RAINBOW COLLECTION-->
-<div class="about">
-<p>The <span class="pink-text font-gilbert">R</span><span class="purple-text font-gilbert">a</span><span class="blue-text text-darken-2 font-gilbert">i</span><span class="light-green-text text-accent-3 font-gilbert">n</span><span class="yellow-text text-accent-2 font-gilbert">b</span><span class="orange-text font-gilbert">o</span><span class="red-text font-gilbert">w</span> Collection is a collaborative library that shares and celebrates creative production made by, for, and about the LGBTQA+ community. </p>
-<br>
-<p>We believe representation is a powerful tool to shaping an artistic scene that is diverse, inclusive and colourful! </p>
-<br>
-<p>Contribute to our ever-growing collection!</p>
-<br>
-</div>
-
-<!--RECOMMENDATION-->
-<div class="recommend">
-    <h2>Recommend me a...</h2>
-    <div>
-    <a href="https://8080-crimson-goat-t3dadzmu.ws-eu09.gitpod.io/category/artwork"><button class="buttons">Artwork</button></a>
-    <a href="https://8080-crimson-goat-t3dadzmu.ws-eu09.gitpod.io/category/books"><button class="buttons">Book</button></a>
-    <a href="https://8080-crimson-goat-t3dadzmu.ws-eu09.gitpod.io/category/movies"><button class="buttons">Movie</button></a>
-    <a href="https://8080-crimson-goat-t3dadzmu.ws-eu09.gitpod.io/category/music"><button class="buttons">Music</button></a>
-    <a href="https://8080-crimson-goat-t3dadzmu.ws-eu09.gitpod.io/category/podcasts"><button class="buttons">Podcast</button></a>
+<div class="row center-align white-opacity-bg text-shadow">
+    <div class="col s12">
+        <h1 class="black-text">
+            The
+            <span class="pink-text font-gilbert">R</span><span class="purple-text font-gilbert">a</span><span class="blue-text text-darken-2 font-gilbert">i</span><span class="light-green-text text-accent-3 font-gilbert">n</span><span class="yellow-text text-accent-2 font-gilbert">b</span><span class="orange-text font-gilbert">o</span><span class="red-text font-gilbert">w</span>
+            Collection
+        </h1>
     </div>
 </div>
-<br>
-<br>
+
+<br><hr class="divider"><br>
+
+<!-- ABOUT THE RAINBOW COLLECTION -->
+<div class="row center-align white-opacity-bg black-text about">
+    <div class="col s12 l8">
+        <p>
+            We are a collaborative library that shares and celebrates
+            creative production made by, for, and about the
+            <span class="red-text text-shadow">L</span><span class="orange-text text-shadow">G</span><span class="yellow-text text-accent-2 text-shadow">B</span><span class="light-green-text text-accent-3 text-shadow">T</span><span class="blue-text text-darken-2 text-shadow">Q</span><span class="purple-text text-shadow">+</span>
+            community.
+        </p>
+        <p>
+            We believe representation is a powerful tool to shaping an artistic scene that is diverse,
+            inclusive, and colourful!
+        </p>
+        <br class="hide-on-small-only">
+        <p>
+            <a href="{{ url_for('suggestions') }}" class="btn-large bold blue-grey darken-4 white-text">
+                Contribute
+            </a>
+            <br>
+            <small>Contribute to our ever-growing collection!</small>
+        </p>
+    </div>
+
+    <div class="col s12 l4 recommend">
+        <h2 class="black-text">View a<br>Random</h2>
+        <a href="{{ url_for('artpiece', id=rand_artwork._id) }}" class="btn-large red accent-2 black-text bold text-shadow">Artwork</a><br>
+        <a href="{{ url_for('artpiece', id=rand_book._id) }}" class="btn-large amber lighten-1 black-text bold text-shadow">Book</a><br>
+        <a href="{{ url_for('artpiece', id=rand_movie._id) }}" class="btn-large green accent-3 black-text bold text-shadow">Movie</a><br>
+        <a href="{{ url_for('artpiece', id=rand_music._id) }}" class="btn-large blue accent-3 black-text bold text-shadow">Music</a><br>
+        <a href="{{ url_for('artpiece', id=rand_podcast._id) }}" class="btn-large purple accent-2 black-text bold text-shadow">Podcast</a>
+    </div>
+</div>
+
+<br><hr class="divider"><br>
+
 <!-- ARTWORK -->
-<ul class="row card-list">
+<ul class="row card-list white">
     {% for item in artwork %}
         {% if loop.index <= 5 %}
             {% include "partials/cards.html" %}
@@ -41,7 +58,7 @@ Collection
     <li class="col center-align">
         <a href="{{ url_for('category', category='artwork') }}">
             <h1 class="red-text text-accent-2 text-shadow">VIEW ALL</h1>
-            <span class="btn-large red accent-2 bold text-shadow hoverable">ARTWORK</span>
+            <span class="btn-large black-text red accent-2 bold text-shadow hoverable">ARTWORK</span>
         </a>
     </li>
 </ul>
@@ -49,7 +66,7 @@ Collection
 <br><hr class="divider"><br>
 
 <!-- BOOKS -->
-<ul class="row card-list">
+<ul class="row card-list white">
     {% for item in books %}
         {% if loop.index <= 5 %}
             {% include "partials/cards.html" %}
@@ -66,7 +83,7 @@ Collection
 <br><hr class="divider"><br>
 
 <!-- MOVIES -->
-<ul class="row card-list">
+<ul class="row card-list white">
     {% for item in movies %}
         {% if loop.index <= 5 %}
             {% include "partials/cards.html" %}
@@ -83,7 +100,7 @@ Collection
 <br><hr class="divider"><br>
 
 <!-- MUSIC -->
-<ul class="row card-list">
+<ul class="row card-list white">
     {% for item in music %}
         {% if loop.index <= 5 %}
             {% include "partials/cards.html" %}
@@ -100,7 +117,7 @@ Collection
 <br><hr class="divider"><br>
 
 <!-- PODCASTS -->
-<ul class="row card-list">
+<ul class="row card-list white">
     {% for item in podcasts %}
         {% if loop.index <= 5 %}
             {% include "partials/cards.html" %}

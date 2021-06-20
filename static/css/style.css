@@ -33,7 +33,7 @@ h1, h2, h3, h4 {
 }
 
 .font-gilbert {
-    font-family: "gilbert", "Bangers", sans-serif;
+    font-family: "Gilbert", "Bangers", sans-serif;
 }
 
 .text-shadow {
@@ -51,6 +51,11 @@ h1, h2, h3, h4 {
 .black-opacity-bg {
     border-radius: 8px;
     background-color: rgba(0, 0, 0, 0.5);
+}
+
+.white-opacity-bg {
+    border-radius: 8px;
+    background-color: rgba(255, 255, 255, 0.5);
 }
 
 
@@ -135,39 +140,22 @@ nav #account-dropdown li:hover {
   right: 0;
   bottom: 60px;
 }
+
+
 /* HOME */
-
 .about {
-    text-align: center;
-    font-size:xx-large;
+    font-size: xx-large;
     font-weight: 900;
-    max-width: 900px;
-    margin: 0 auto;
-}
-
-.recommend {    
-    display: grid;
-    grid-template-columns: 1fr;
-    grid-gap: 15px;
-    padding: 20px 20px 150px 20px;
-    background-color: rgba(0, 0, 0, 0.5);
-    border-radius: 15px;
-}
-
-.recommend h2 {
-    color:white;
-}
-.recommend .buttons {
-    background-color: white;
-    color: black;
-    padding: 10px 35px;
-    border-radius: 15px;
-    display: inline-block;
-    text-decoration: none;
-    transition: .3s;
+    padding: 1em;
 }
 
 
+/* RECOMMEND */
+.recommend .btn-large {
+    border-radius: 8px;
+    margin: 0.5em 1em;
+    width: 75%;
+}
 
 
 /* HR */
@@ -292,7 +280,6 @@ hr.divider::before {
     margin: 0 auto;
     align-self: center;
     justify-items: center;
-    background-color: rgba(0, 0, 0, 0.5);
 }
 
 .card-list li {
@@ -410,6 +397,10 @@ hr.divider::before {
 }
 
 /* FORM */
+.suggestion-form {
+    padding: 3em;
+}
+
 .add-border {
     border: 1px solid #CFEBDF;
 }

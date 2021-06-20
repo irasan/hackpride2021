@@ -39,7 +39,7 @@
         {% for rev in reviews %}
         <div class="review-bubble">
             <p>{{rev.review}}<br>
-                <span>by {{rev.username}} &middot; {{rev.date.strftime('%Y-%m-%d')  }}</span></p>
+                <span>by {{rev.username}} &middot; {{rev.date }}</span></p>
         </div>
         {% endfor %}
         {% else %}
@@ -57,13 +57,13 @@
             <form method="POST" action="{{ url_for('artpiece', id=item._id) }}">
                 <div class="input-field">
                     <textarea class="materialize-textarea" type="text" name="review" id="review" minlength="10"
-                    maxlength="100" required></textarea>
+                    maxlength="400" required></textarea>
+                </div>
+                <div class="modal-footer">
+                    <button type="reset" class="modal-close btn-flat">Cancel</button>
+                    <button type="submit" class="btn-flat">Send</button>
                 </div>
             </form>
-        </div>
-        <div class="modal-footer">
-            <button type="reset" class="modal-close waves-effect btn-flat">Cancel</a>
-            <button type="submit" class="modal-close waves-effect btn-flat">Send</a>
         </div>
     </div>
 </div>
