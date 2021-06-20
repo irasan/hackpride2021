@@ -185,7 +185,28 @@ def profile(username):
         # grab the user's favorites list
         favs = list(mongo.db.art.find(
             {"_id": {"$in": user["favorites"]}}).sort("title", 1))
-        return render_template("profile.html", user=user, favs=favs)
+        artwork = []
+        books = []
+        movies = []
+        music = []
+        podcasts = []
+        for record in favs:
+            if record["category"] == "artwork":
+                artwork.append(record)
+            elif record["category"] == "books":
+                books.append(record)
+            elif record["category"] == "movies":
+                movies.append(record)
+            elif record["category"] == "music":
+                music.append(record)
+            elif record["category"] == "podcasts":
+                podcasts.append(record)
+            else:
+                print("Invalid category")
+        return render_template(
+            "profile.html", user=user, favs=favs,
+            artwork=artwork, books=books,
+            movies=movies, music=music, podcasts=podcasts)
 
     # take the incorrect user to their own profile
     return redirect(url_for("profile", username=session["user"]))
@@ -244,7 +265,8 @@ def add_art():
             mongo.db.art.insert_one(art)
             flash("Your Review Was Successfully Added")
             return render_template("home.html")
-    return render_template("add_art.html", result=result, categories=categories)
+    return render_template(
+        "add_art.html", result=result, categories=categories)
 
 
 @app.route("/edit_art/<id>", methods=["GET", "POST"])
@@ -299,7 +321,7 @@ def artpiece(id):
     # get the id and display the full page with reviews
     item = mongo.db.art.find_one({"_id": ObjectId(id)})
     reviews = list(mongo.db.reviews.find(
-        {"item_id": ObjectId(id)}).sort("date", 1))
+        {"item_id": ObjectId(id)}))
 
     if request.method == "POST":
         if "user" in session:
@@ -311,6 +333,11 @@ def artpiece(id):
                 "item_id": ObjectId(id),
             }
             mongo.db.reviews.insert_one(user_review)
+            mongo.db.users.find_one_and_update(
+                {"username": session["user"].lower()},
+                {"$push": {"reviews": ObjectId(id)}})
+            mongo.db.art.update_one({"_id": ObjectId(id)},
+                {"$inc": {"reviews": 1}})
             flash("Your Review Was Successfully Added")
             return redirect(url_for("artpiece", id=id))
         else:
@@ -323,14 +350,28 @@ def artpiece(id):
 @app.route("/add_favorite/<id>")
 # add art piece to user's favorites'
 def add_favorite(id):
-    item = mongo.db.art.find_one({"_id": ObjectId(id)})
-    reviews = list(mongo.db.reviews.find(
-        {"item_id": ObjectId(id)}).sort("date", 1))
+    # check if item is already in favorites!!!
+
     mongo.db.users.find_one_and_update(
         {"username": session["user"].lower()},
         {"$push": {"favorites": ObjectId(id)}})
+    mongo.db.art.update_one({"_id": ObjectId(id)},
+        {"$inc": {"favorites": 1}})
     flash("This art piece has been saved to your favorites!")
-    return render_template("artpiece.html", item=item, reviews=reviews)
+    return redirect(url_for("profile", username=session["user"]))
+
+
+@app.route("/remove_favorite/<id>")
+@login_required
+# remove art piece from user's favorites'
+def remove_favorite(id):
+    mongo.db.users.find_one_and_update(
+        {"username": session["user"].lower()},
+        {"$pull": {"favorites": ObjectId(id)}})
+    mongo.db.art.update_one({"_id": ObjectId(id)},
+        {"$inc": {"favorites": -1}})
+    flash("This art piece has been removed from your favorites!")
+    return redirect(url_for("profile", username=session["user"]))
 
 
 @app.route("/category/<category>")

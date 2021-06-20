@@ -2,27 +2,96 @@
 {% block content %}
 
 <h3>
-    <img src="{{ url_for('static', filename='images/avatars/'+user.avatar+'.png') }}" class="avatar" alt="{{ user.avatar }}">
+    <img src="{{ url_for('static', filename='images/avatars/'+user.avatar+'.png') }}" class="avatar"
+        alt="{{ user.avatar }}">
     {{ user.username|title }}'s Favourites
 </h3>
 
 <!-- first check if there's any saved items to display -->
 {% if favs|length > 0 %}
 
-    {% for item in favs %} <br>
-        {{ item.title}} <br>
-        {{ item.author}} <br>
-        {{ item.category}} <br>
-        {{ item.summary}} <br>
+<!-- favorite books -->
+{% if books|length > 0 %}
+<ul class="row card-list">
+    {% for item in books %}
+    {% include "partials/cards_profile.html" %}
     {% endfor %}
-
-<!-- if no reviews to display -->
+    <li class="col center-align">
+    </li>
+</ul>
 {% else %}
-    <div class="row">
-        <h3>You have no favorites yet. Add one now!</h3>
-        <a href="{{ url_for('add_art') }}" class="btn">
-            <i class="fas fa-plus"></i></a>
-    </div>
+<a href="{{ url_for('category', category='books') }}">Find a book here</a>
+<br>
+<hr class="divider"><br>
+{% endif %}
+
+<!-- favorite movies -->
+{% if movies|length > 0 %}
+<ul class="row card-list">
+    {% for item in movies %}
+    {% include "partials/cards_profile.html" %}
+    {% endfor %}
+    <li class="col center-align">
+    </li>
+</ul>
+{% else %}
+<a href="{{ url_for('category', category='movies') }}">Find a movie here</a>
+<br>
+<hr class="divider"><br>
+{% endif %}
+
+<!-- favorite music -->
+{% if music|length > 0 %}
+<ul class="row card-list">
+    {% for item in music %}
+    {% include "partials/cards_profile.html" %}
+    {% endfor %}
+    <li class="col center-align">
+    </li>
+</ul>
+{% else %}
+<a href="{{ url_for('category', category='music') }}">Find music here</a>
+<br>
+<hr class="divider"><br>
+{% endif %}
+
+<!-- favorite art -->
+{% if art|length > 0 %}
+<ul class="row card-list">
+    {% for item in art %}
+    {% include "partials/cards_profile.html" %}
+    {% endfor %}
+    <li class="col center-align">
+    </li>
+</ul>
+{% else %}
+<a href="{{ url_for('category', category='art') }}">Find art here</a>
+<br>
+<hr class="divider"><br>
+{% endif %}
+
+<!-- favorite podcasts -->
+{% if podcasts|length > 0 %}
+<ul class="row card-list">
+    {% for item in podcasts %}
+    {% include "partials/cards_profile.html" %}
+    {% endfor %}
+    <li class="col center-align">
+    </li>
+</ul>
+{% else %}
+<a href="{{ url_for('category', category='podcasts') }}">Find a podcast here</a>
+<br>
+<hr class="divider"><br>
+{% endif %}
+
+<!-- if no favorites to display -->
+{% else %}
+<div class="row">
+    <h3>You have no favorites yet. Add one now!</h3>
+    <a href="{{ url_for('home') }}" class="btn">
+        <i class="fas fa-plus"></i></a>
+</div>
 {% endif %}
 
 {% endblock %}
