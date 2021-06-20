@@ -25,6 +25,12 @@ $(document).ready(function () {
         $("#img_new").empty().prepend(`<img class="small-img" src="${$(this).val()}" onError="this.onerror=null;this.src='../../../static/images/no_img.png';">`);
     });
 
+    // update "active" sub-navbar link
+    // if (window.location.href.indexOf("franky") > -1) {
+    //     alert("your url contains the name franky");
+    // }
+    console.log(window.location.href);
+
     // passwords must match
     $("#register").attr("disabled", true);
     let password = "";
