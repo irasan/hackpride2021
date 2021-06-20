@@ -54,9 +54,12 @@ def is_admin(f):
 @app.route("/home")
 def home():
     """
-    The homepage to display a lit of all artwork from the database
+    The homepage to display a list of all artwork from the database,
+    a random record for each category, and a brief intro about the site.
     """
-    art = list(mongo.db.art.find())
+    # find all records that are "approved"
+    art = list(mongo.db.art.find({"is_approved": True}))
+    # generate each sub-category list
     artwork = []
     books = []
     movies = []
@@ -76,11 +79,11 @@ def home():
         else:
             print("Invalid category")
     # get a random record from each category
-    rand_artwork = random.choice(artwork)
-    rand_book = random.choice(books)
-    rand_movie = random.choice(movies)
-    rand_music = random.choice(music)
-    rand_podcast = random.choice(podcasts)
+    rand_artwork = random.choice(artwork) if len(artwork) > 0 else ""
+    rand_book = random.choice(books) if len(books) > 0 else ""
+    rand_movie = random.choice(movies) if len(movies) > 0 else ""
+    rand_music = random.choice(music) if len(music) > 0 else ""
+    rand_podcast = random.choice(podcasts) if len(podcasts) > 0 else ""
     return render_template(
         "home.html", artwork=artwork, books=books,
         movies=movies, music=music, podcasts=podcasts,
@@ -156,6 +159,7 @@ def login():
                 if check_password_hash(
                     existing_user["password"], request.form.get("password")):
                         session["user"] = request.form.get("username").lower()
+                        session["is_admin"] = True
                         flash(f"Welcome, {request.form.get('username')}")
                         return redirect(url_for(
                             "profile", username=session["user"]))
@@ -212,12 +216,24 @@ def profile(username):
     return redirect(url_for("profile", username=session["user"]))
 
 
+@app.route("/admin")
+@login_required
+@is_admin
+def admin():
+    """
+    Admin-Only page
+    """
+    pending = list(mongo.db.suggestions.find({"is_approved": False}))
+    return render_template("admin.html", pending=pending)
+
+
 @app.route("/logout")
 @login_required
 def logout():
     # remove user from session cookies
     flash("You have been logged out")
     session.pop("user")
+    session.pop("is_admin")
     return redirect(url_for("login"))
 
 
@@ -336,7 +352,8 @@ def artpiece(id):
             mongo.db.users.find_one_and_update(
                 {"username": session["user"].lower()},
                 {"$push": {"reviews": ObjectId(id)}})
-            mongo.db.art.update_one({"_id": ObjectId(id)},
+            mongo.db.art.update_one(
+                {"_id": ObjectId(id)},
                 {"$inc": {"reviews": 1}})
             flash("Your Review Was Successfully Added")
             return redirect(url_for("artpiece", id=id))

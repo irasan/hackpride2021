@@ -1,0 +1,14 @@
+<li class="collection-item avatar">
+    <img src="{{ item.image }}" alt="{{ item.title }}" class="circle">
+    <span class="title bold">{{ item.title }}</span>
+    <p>
+        {{ item.summary|truncate(125) }}
+        <br>
+        <a href="{{ url_for('artpiece', id=item._id) }}" class="bold">Add A Review</a>
+    </p>
+    <a href="{{ url_for('remove_favorite', id=item._id) }}" class="secondary-content center-align red-text bold">
+        <i class="fas fa-trash-alt"></i>
+        <br>
+        Remove
+    </a>
+</li>

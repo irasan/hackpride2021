@@ -21,13 +21,14 @@
         <!-- Author -->
         <div class="col s12">
             <label for="author" class="form-label">Author</label>
-            <input type="text" name="author" class="form-control" id="author" minlength="5" maxlength="50" required>
-        </div>
+            <input type="text" name="author" class="form-control validate" id="author" minlength="5" maxlength="50" required>
+        
         <!-- Year -->
         <div class="col s6">
             <label for="year" class="form-label">Year</label>
             <input type="number" name="year" pattern="^[0-9]{4}$" min="1800" max="2099" class="form-control validate" id="year" required>
         </div>
+        
         <!-- Country -->
         <div class="col s6">
             <label for="country" class="form-label">Country</label>
@@ -68,14 +69,11 @@
         <!-- Submit -->
         <div class="col s12">
             <div class="col">
-                <button
-                  class="btn bold blue-grey darken-4 white-text"
-                  type="submit"
-                  name="action"
-                >
-                  Add
-                  <span class="ml-1"><i class="far fa-paper-plane"></i></span>
+                <button class="btn bold blue-grey darken-4 white-text" type="submit" name="action">
+                    Add
+                    <span class="ml-1"><i class="far fa-paper-plane"></i></span>
                 </button>
+            </div>
         </div>
         
     </form>

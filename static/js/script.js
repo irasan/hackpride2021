@@ -1,8 +1,14 @@
+// preloader
+$(window).on("load", function () {
+    $("#preloader").fadeOut();
+});
+
 $(document).ready(function () {
     $(".dropdown-trigger").dropdown(); // navbar dropdown
     $(".sidenav").sidenav({edge: "right"}); // mobile sidenav
     $("select").formSelect(); // select dropdowns
-    $(".modal").modal();  // modals
+    $(".modal").modal(); // modals
+    $(".tabs").tabs(); // tabs
 
     // custom flash messages
     function flashToast() {
