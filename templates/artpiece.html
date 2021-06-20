@@ -2,64 +2,75 @@
 {% block content %}
 
 <!-- art piece -->
-<div class="row">
+<div class="row white-opacity-bg">
     <div class="col s12">
+        {% if session.user %}
+        <a class="right green-text text-darken-1 tooltipped" data-position="bottom" data-tooltip="Save to favorites" href="{{ url_for('add_favorite', id=item._id) }}">
+            <i class="far fa-bookmark fa-5x" id="save-icon"></i></a>
+        {% endif %}
         <h2 class="header">{{ item.title|capitalize }}</h2>
         <h5>by {{ item.author|title }}</h5>
     </div>
-</div>
-<div class="row">
-    <div class="col s12 m6">
-        <div class="card horizontal">
-            <div class="card-image">
-                <img src="{{ item.image }}" alt="{{ item.title }}" onerror="this.onerror=null;this.src='{{ url_for('static', filename='images/no_img.png') }}';">
-            </div>
-            <div class="card-stacked">
-                <div class="card-content">
-                    <p>{{ item.year }}</p>
-                    <p>{{ item.summary }}</p>
+
+    <div class="row">
+        <div class="col s12 m6">
+            <div class="card horizontal" id="artpiece">
+                <div class="card-image">
+                    <img src="{{ item.image }}" alt="{{ item.title }}"
+                        onerror="this.onerror=null;this.src='{{ url_for('static', filename='images/no_img.png') }}';">
                 </div>
-                <div class="card-action">
-                    <a href="{{ item.website }}">VIEW ONLINE</a>
+                <div class="card-stacked">
+                    <div class="card-content">
+                        <p class="bold text-shadow">{{ item.year }} &middot; {{ item.country }} <span
+                                class="right red-text tooltipped" data-position="top" data-tooltip="Explicit content">
+                                <i class="fas fa-exclamation-circle fa-lg"></i></span></p>
+                        <p>{{ item.summary }}</p>
+                    </div>
+                    <div class="card-action">
+                        <a class="purple-text text-accent-2" href="{{ item.website }}" target="_blank">VIEW ONLINE</a>
+                    </div>
                 </div>
             </div>
         </div>
-        <a class="btn purple accent-2 black-text bold text-shadow hoverable "
-            href="{{ url_for('add_favorite', id=item._id) }}">Save to favorites</a>
-    </div>
 
 
-    <!-- reviews -->
-    <div class="col s12 m6 center">
-        {% if reviews|length > 0 %}
-        {% for rev in reviews %}
-        <div class="review-bubble">
-            <p>{{rev.review}}<br>
-                <span>by {{rev.username}} &middot; {{rev.date }}</span></p>
+        <!-- reviews -->
+        <div class="col s12 m6 center">
+            {% if reviews|length > 0 %}
+            <div class="hide-on-med-and-up">
+                <h4>Reviews:</h4>
+            </div>
+            {% for rev in reviews %}
+            <div class="review-bubble">
+                <p>{{rev.review}}<br>
+                    <span class="bold orange-text text-darken-3">by {{rev.username}} &middot; {{rev.date }}</span></p>
+            </div>
+            {% endfor %}
+            {% else %}
+            <h5>There's no reviews yet. Be the first one to share your thoughts!</h5>
+            {% endif %}
+            {% if session.user %}
+            <span ><a class="btn-large amber lighten-1 black-text bold text-shadow hoverable modal-trigger"
+                    href="#add_review">Add
+                    review</a></span>
+            {% endif %}
         </div>
-        {% endfor %}
-        {% else %}
-        <h5>There's no reviews yet. Be the first one to share your thoughts!</h5>
-        {% endif %}
-        <span class="right"><a class="btn-small green accent-3 black-text bold text-shadow hoverable modal-trigger"
-                href="#add_review">Add
-                review</a></span>
-    </div>
 
-    <!-- Modal for adding reviews -->
-    <div id="add_review" class="modal">
-        <div class="modal-content">
-            <h4>Leave your comment below:</h4>
-            <form method="POST" action="{{ url_for('artpiece', id=item._id) }}">
-                <div class="input-field">
-                    <textarea class="materialize-textarea" type="text" name="review" id="review" minlength="10"
-                    maxlength="400" required></textarea>
-                </div>
-                <div class="modal-footer">
-                    <button type="reset" class="modal-close btn-flat">Cancel</button>
-                    <button type="submit" class="btn-flat">Send</button>
-                </div>
-            </form>
+        <!-- Modal for adding reviews -->
+        <div id="add_review" class="modal">
+            <div class="modal-content">
+                <h4>Leave your comment below:</h4>
+                <form method="POST" action="{{ url_for('artpiece', id=item._id) }}">
+                    <div class="input-field">
+                        <textarea class="materialize-textarea" type="text" name="review" id="review" minlength="10"
+                            maxlength="400" required></textarea>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="reset" class="modal-close btn-flat">Cancel</button>
+                        <button type="submit" class="btn-flat">Send</button>
+                    </div>
+                </form>
+            </div>
         </div>
     </div>
 </div>
