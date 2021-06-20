@@ -223,8 +223,19 @@ def admin():
     """
     Admin-Only page
     """
-    pending = list(mongo.db.suggestions.find({"is_approved": False}))
+    pending = list(mongo.db.art.find({"is_approved": False}))
     return render_template("admin.html", pending=pending)
+
+
+@app.route("/approve_art/<id>", methods=["GET", "POST"])
+@login_required
+@is_admin
+def approve_art(id):
+    """
+    Approve a suggestion from the Admin-Page
+    """
+    mongo.db.art.find_one_and_update({"_id": ObjectId(id)}, {"$set": {"is_approved": True}})
+    return redirect(url_for("admin"))
 
 
 @app.route("/logout")
@@ -375,7 +386,7 @@ def add_favorite(id):
     mongo.db.art.update_one({"_id": ObjectId(id)},
         {"$inc": {"favorites": 1}})
     flash("This art piece has been saved to your favorites!")
-    return redirect(url_for("profile", username=session["user"]))
+    return redirect(request.referrer)
 
 
 @app.route("/remove_favorite/<id>")
@@ -395,7 +406,7 @@ def remove_favorite(id):
 def category(category):
     # display all records for each category
     art = list(mongo.db.art.find({"category": category}))
-    return render_template("category.html", art=art)
+    return render_template("category.html", art=art, category=category)
 
 
 @app.route("/suggestions", methods=["GET", "POST"])
@@ -414,7 +425,7 @@ def suggestions():
                 "image": request.form.get("cover"),
                 "is_approved": bool(False)
         }
-        mongo.db.suggestions.insert_one(suggestion)
+        mongo.db.art.insert_one(suggestion)
         flash("Thank You! Your suggestions is being reviewed!")
         return redirect(url_for("home"))
     categories = list(mongo.db.categories.find().sort("category_name", 1))

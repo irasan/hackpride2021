@@ -4,6 +4,8 @@
 <h3>Add Art</h3>
 <a href="{{ url_for('add_art') }}" class="btn-large bold blue-grey darken-4 white-text">Add New Art</a>
 
+<br><br><hr class="divider"><br>
+
 <h3>Pending Suggestions</h3>
 
 {% if pending|length > 0 %}
@@ -21,7 +23,7 @@
                     Website: <a href="{{ item.website }}" target="_blank">{{ item.website }}</a><br><br>
                     Summary: {{ item.summary }}
                 </p>
-                <a href="" class="secondary-content center-align green-text bold">
+                <a href="{{ url_for('approve_art', id=item._id) }}" class="secondary-content center-align green-text bold">
                     <i class="fas fa-user-check"></i>
                     <br>
                     Approve
