@@ -3,7 +3,7 @@
 
 <div class="row center-align white-opacity-bg text-shadow">
     <div class="col s12">
-        <h1 class="black-text">
+        <h1 class="black-text main-logo">
             The
             <span class="pink-text font-gilbert">R</span><span class="purple-text font-gilbert">a</span><span class="blue-text text-darken-2 font-gilbert">i</span><span class="light-green-text text-accent-3 font-gilbert">n</span><span class="yellow-text text-accent-2 font-gilbert">b</span><span class="orange-text font-gilbert">o</span><span class="red-text font-gilbert">w</span>
             Collection
@@ -37,7 +37,7 @@
     </div>
 
     <div class="col s12 l4 recommend">
-        <h2 class="black-text">View a<br>Random</h2>
+        <h2 class="black-text">View a<br>random</h2>
         <a href="{{ url_for('artpiece', id=rand_artwork._id) }}" class="btn-large red accent-2 black-text bold text-shadow">Artwork</a><br>
         <a href="{{ url_for('artpiece', id=rand_book._id) }}" class="btn-large amber lighten-1 black-text bold text-shadow">Book</a><br>
         <a href="{{ url_for('artpiece', id=rand_movie._id) }}" class="btn-large green accent-3 black-text bold text-shadow">Movie</a><br>
@@ -49,6 +49,7 @@
 <br><hr class="divider"><br>
 
 <!-- ARTWORK -->
+{% if artwork|length > 0 %}
 <ul class="row card-list white">
     {% for item in artwork %}
         {% if loop.index <= 5 %}
@@ -64,8 +65,10 @@
 </ul>
 
 <br><hr class="divider"><br>
+{% endif %}
 
 <!-- BOOKS -->
+{% if books|length > 0 %}
 <ul class="row card-list white">
     {% for item in books %}
         {% if loop.index <= 5 %}
@@ -81,8 +84,10 @@
 </ul>
 
 <br><hr class="divider"><br>
+{% endif %}
 
 <!-- MOVIES -->
+{% if movies|length > 0 %}
 <ul class="row card-list white">
     {% for item in movies %}
         {% if loop.index <= 5 %}
@@ -98,8 +103,10 @@
 </ul>
 
 <br><hr class="divider"><br>
+{% endif %}
 
 <!-- MUSIC -->
+{% if music|length > 0 %}
 <ul class="row card-list white">
     {% for item in music %}
         {% if loop.index <= 5 %}
@@ -115,8 +122,10 @@
 </ul>
 
 <br><hr class="divider"><br>
+{% endif %}
 
 <!-- PODCASTS -->
+{% if podcasts|length > 0 %}
 <ul class="row card-list white">
     {% for item in podcasts %}
         {% if loop.index <= 5 %}
@@ -130,5 +139,6 @@
         </a>
     </li>
 </ul>
+{% endif %}
 
 {% endblock %}

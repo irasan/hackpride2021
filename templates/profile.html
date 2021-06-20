@@ -1,102 +1,118 @@
 {% extends "base.html" %}
 {% block content %}
 
-<h3>
+<h3 class="white-opacity-bg center-align">
     <img src="{{ url_for('static', filename='images/avatars/'+user.avatar+'.png') }}" class="avatar"
         alt="{{ user.avatar }}">
     {{ user.username|title }}'s Favourites
 </h3>
 
-<!-- first check if there's any saved items to display -->
-{% if favs|length > 0 %}
-
-<!-- favorite books -->
-<div class=row>
-    <div class="col m1 black-opacity-bg">
-        <p>BOOKS</p>
-    </div>
-{% if books|length > 0 %}
-<ul class="row card-list">
-    {% for item in books %}
-    {% include "partials/cards_profile.html" %}
-    {% endfor %}
-    <li class="col center-align">
-    </li>
+<!-- category tabs -->
+<ul class="tabs tabs-fixed-width tab-demo z-depth-1">
+    <li class="tab red accent-2"><a href="#artwork" class="black-text bold">Artwork</a></li>
+    <li class="tab amber lighten-1"><a href="#books" class="black-text bold">Books</a></li>
+    <li class="tab green accent-3"><a href="#movies" class="black-text bold">Movies</a></li>
+    <li class="tab blue accent-3"><a href="#music" class="black-text bold">Music</a></li>
+    <li class="tab purple accent-2"><a href="#podcasts" class="black-text bold">Podcasts</a></li>
 </ul>
-{% else %}
-<a href="{{ url_for('category', category='books') }}">Find a book here</a>
-<br>
-<hr class="divider"><br>
-{% endif %}
+
+<!-- ARTWORK -->
+<div id="artwork">
+    <ul class="collection">
+        {% if artwork|length > 0 %}
+            {% for item in artwork %}
+                {% include "partials/collections.html" %}
+            {% endfor %}
+        {% else %}
+            <li class="collection-item avatar">
+                <img src="{{ url_for('static', filename='images/no_img.png') }}" alt="" class="circle">
+                <span class="title">You do not have any favorite Artwork yet.</span>
+                <p>
+                    <a href="{{ url_for('category', category='artwork') }}" class="bold">View Artwork</a>
+                </p>
+            </li>
+        {% endif %}
+      </ul>
 </div>
 
-<!-- favorite movies -->
-{% if movies|length > 0 %}
-<ul class="row card-list">
-    {% for item in movies %}
-    {% include "partials/cards_profile.html" %}
-    {% endfor %}
-    <li class="col center-align">
-    </li>
-</ul>
-{% else %}
-<a href="{{ url_for('category', category='movies') }}">Find a movie here</a>
-<br>
-<hr class="divider"><br>
-{% endif %}
 
-<!-- favorite music -->
-{% if music|length > 0 %}
-<ul class="row card-list">
-    {% for item in music %}
-    {% include "partials/cards_profile.html" %}
-    {% endfor %}
-    <li class="col center-align">
-    </li>
-</ul>
-{% else %}
-<a href="{{ url_for('category', category='music') }}">Find music here</a>
-<br>
-<hr class="divider"><br>
-{% endif %}
-
-<!-- favorite art -->
-{% if art|length > 0 %}
-<ul class="row card-list">
-    {% for item in art %}
-    {% include "partials/cards_profile.html" %}
-    {% endfor %}
-    <li class="col center-align">
-    </li>
-</ul>
-{% else %}
-<a href="{{ url_for('category', category='art') }}">Find art here</a>
-<br>
-<hr class="divider"><br>
-{% endif %}
-
-<!-- favorite podcasts -->
-{% if podcasts|length > 0 %}
-<ul class="row card-list">
-    {% for item in podcasts %}
-    {% include "partials/cards_profile.html" %}
-    {% endfor %}
-    <li class="col center-align">
-    </li>
-</ul>
-{% else %}
-<a href="{{ url_for('category', category='podcasts') }}">Find a podcast here</a>
-<br>
-<hr class="divider"><br>
-{% endif %}
-
-<!-- if no favorites to display -->
-{% else %}
-<div class="row">
-    <h3>You have no favorites yet. Add one now!</h3>
-    <a href="{{ url_for('home') }}" class="btn">
-        <i class="fas fa-plus"></i></a>
+<!-- BOOKS -->
+<div id="books">
+    <ul class="collection">
+        {% if books|length > 0 %}
+            {% for item in books %}
+                {% include "partials/collections.html" %}
+            {% endfor %}
+        {% else %}
+            <li class="collection-item avatar">
+                <img src="{{ url_for('static', filename='images/no_img.png') }}" alt="No Image" class="circle">
+                <span class="title">You do not have any favorite Books yet.</span>
+                <p>
+                    <a href="{{ url_for('category', category='books') }}" class="bold">View Books</a>
+                </p>
+            </li>
+        {% endif %}
+    </ul>
 </div>
-{% endif %}
+
+
+<!-- MOVIES -->
+<div id="movies">
+    <ul class="collection">
+        {% if movies|length > 0 %}
+            {% for item in movies %}
+                {% include "partials/collections.html" %}
+            {% endfor %}
+        {% else %}
+            <li class="collection-item avatar">
+                <img src="{{ url_for('static', filename='images/no_img.png') }}" alt="No Image" class="circle">
+                <span class="title">You do not have any favorite Movies yet.</span>
+                <p>
+                    <a href="{{ url_for('category', category='movies') }}" class="bold">View Movies</a>
+                </p>
+            </li>
+        {% endif %}
+    </ul>
+</div>
+
+
+<!-- MUSIC -->
+<div id="music">
+    <ul class="collection">
+        {% if music|length > 0 %}
+            {% for item in music %}
+                {% include "partials/collections.html" %}
+            {% endfor %}
+        {% else %}
+            <li class="collection-item avatar">
+                <img src="{{ url_for('static', filename='images/no_img.png') }}" alt="No Image" class="circle">
+                <span class="title">You do not have any favorite Music yet.</span>
+                <p>
+                    <a href="{{ url_for('category', category='music') }}" class="bold">View Music</a>
+                </p>
+            </li>
+        {% endif %}
+    </ul>
+</div>
+
+
+<!-- PODCASTS -->
+<div id="podcasts">
+    <ul class="collection">
+        {% if podcasts|length > 0 %}
+            {% for item in podcasts %}
+                {% include "partials/collections.html" %}
+            {% endfor %}
+        {% else %}
+            <li class="collection-item avatar">
+                <img src="{{ url_for('static', filename='images/no_img.png') }}" alt="No Image" class="circle">
+                <span class="title">You do not have any favorite Podcasts yet.</span>
+                <p>
+                    <a href="{{ url_for('category', category='podcasts') }}" class="bold">View Podcasts</a>
+                </p>
+            </li>
+        {% endif %}
+    </ul>
+</div>
 
 {% endblock %}
