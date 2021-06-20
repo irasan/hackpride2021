@@ -47,7 +47,7 @@ h1, h2, h3, h4 {
 }
 
 .font-gilbert {
-    font-family: "gilbert", "Bangers", sans-serif;
+    font-family: "Gilbert", "Bangers", sans-serif;
 }
 
 .text-shadow {
@@ -72,14 +72,11 @@ h1, h2, h3, h4 {
     background-color: rgba(255, 255, 255, 0.5);
 }
 
-<<<<<<< HEAD
 .br-8px {
     border-radius: 8px;
 }
 
 
-=======
->>>>>>> 87f668c03b51b4673c1073ac7441d322a419d511
 /*------ PRELOADER -----*/
 #preloader {
     position: fixed;
@@ -158,6 +155,7 @@ nav .nav-wrapper .col a {
 }
 
 nav .nav-wrapper .col a:hover,
+nav .nav-wrapper .col a.active,
 .fa-bars:hover {
     color: #ffca28;
 }
@@ -206,53 +204,30 @@ nav #account-dropdown li:hover {
   right: 0;
   bottom: 60px;
 }
+
+
 /* HOME */
-
 .about {
-    text-align: center;
-    font-size:xx-large;
+    font-size: xx-large;
     font-weight: 900;
-    max-width: 900px;
-    margin: 0 auto;
+    padding: 1em;
 }
 
-.recommend {    
-    display: -ms-grid;    
-    display: grid;
-    -ms-grid-columns: 1fr;
-    grid-template-columns: 1fr;
-    grid-gap: 15px;
-    padding: 20px 20px 150px 20px;
-    background-color: rgba(0, 0, 0, 0.5);
-    border-radius: 15px;
+
+/* RECOMMEND */
+.recommend .btn-large {
+    border-radius: 8px;
+    margin: 0.5em 1em;
+    width: 75%;
 }
 
-<<<<<<< HEAD
 /*CATEGORY*/
 
 .library {
     padding-bottom: 3px;
     padding-top: 3px;
     border-radius: 8px;
-=======
-.recommend h2 {
-    color:white;
 }
-.recommend .buttons {
-    background-color: white;
-    color: black;
-    padding: 10px 35px;
-    border-radius: 15px;
-    display: inline-block;
-    text-decoration: none;
-    -webkit-transition: .3s;
-    -o-transition: .3s;
-    transition: .3s;
->>>>>>> 87f668c03b51b4673c1073ac7441d322a419d511
-}
-
-
-
 
 /* HR */
 hr.divider { 
@@ -371,7 +346,6 @@ hr.divider::before {
     to {top: 0; opacity: 0;}
 }
 
-
 /* REGISTER */
 #register,
 #login {
@@ -424,11 +398,7 @@ hr.divider::before {
         -ms-grid-row-align: center;
         align-self: center;
     justify-items: center;
-<<<<<<< HEAD
     border-radius: 8px;
-=======
-    background-color: rgba(0, 0, 0, 0.5);
->>>>>>> 87f668c03b51b4673c1073ac7441d322a419d511
 }
 
 .card-list li {
@@ -556,11 +526,15 @@ hr.divider::before {
     opacity: 0.9;
 }
 
+.card-list .flag {
+    vertical-align: middle;
+}
+
 
 /* REVIEWS */
 .review-bubble {
     border-radius: 8px;
-    background: #fffde7;
+    background: #FFFDE7;
     margin-bottom: 10px;
     margin-top: 0;
     padding: 5px 20px;
@@ -577,10 +551,8 @@ hr.divider::before {
 
 #save-icon {
     padding: 10px;
-/* FORM */
-.add-border {
-    border: 1px solid #CFEBDF;
 }
+
 
 /* FORM */
 .suggestion-form {
@@ -608,6 +580,7 @@ hr.divider::before {
 .collection .collection-item.avatar:not(.circle-clipper)>.circle,
 .collection .collection-item.avatar :not(.circle-clipper)>.circle {
     width: unset;
+    max-width: 50px;
     height: 60px;
 }
 

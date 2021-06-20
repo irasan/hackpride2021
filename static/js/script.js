@@ -27,10 +27,22 @@ $(document).ready(function () {
     });
 
     // update "active" sub-navbar link
-    // if (window.location.href.indexOf("franky") > -1) {
-    //     alert("your url contains the name franky");
-    // }
-    console.log(window.location.href);
+    if (window.location.pathname.indexOf("/category/artwork") > -1) {
+        $(".subnav").removeClass("active");
+        $("#artwork-nav").addClass("active");
+    } else if (window.location.pathname.indexOf("/category/books") > -1) {
+        $(".subnav").removeClass("active");
+        $("#book-nav").addClass("active");
+    } else if (window.location.pathname.indexOf("/category/movies") > -1) {
+        $(".subnav").removeClass("active");
+        $("#movie-nav").addClass("active");
+    } else if (window.location.pathname.indexOf("/category/music") > -1) {
+        $(".subnav").removeClass("active");
+        $("#music-nav").addClass("active");
+    } else if (window.location.pathname.indexOf("/category/podcasts") > -1) {
+        $(".subnav").removeClass("active");
+        $("#podcast-nav").addClass("active");
+    }
 
     // passwords must match
     $("#register").attr("disabled", true);

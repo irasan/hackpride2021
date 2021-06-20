@@ -239,6 +239,7 @@ def approve_art(id):
     """
     mongo.db.art.find_one_and_update(
         {"_id": ObjectId(id)}, {"$set": {"is_approved": True}})
+    flash("Suggestion Approved")
     return redirect(url_for("admin"))
 
 
@@ -247,9 +248,8 @@ def approve_art(id):
 def logout():
     # remove user from session cookies
     flash("You Have Been Logged Out")
-    # session.pop("user")
-    # session.pop("is_admin")
     session.clear()
+    flash("You Have Been Logged Out")
     return redirect(url_for("login"))
 
 

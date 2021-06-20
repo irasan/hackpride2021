@@ -4,21 +4,30 @@
 <h3 class="center-align white br-8px">{{ category|title }} Collection</h3>
 
 <div class="row">
-{% for item in art|reverse %}
 
-<div class="col s12 m6 l3">
-    <ul class="white library">
-        <div class="card-list">
-        <li><figure>
-            <img src="{{ item.image }}" alt="{{ item.title }}" onerror="this.onerror=null;this.src='{{ url_for('static', filename='images/no_img.png') }}';">
-        </figure></li>
-        <li><p class="text-shadow">{{ item.title|truncate(20) }}</p></li>
-        <li><p class="text-shadow">{{ item.author|truncate(20) }}</p></li>
-        <li><p class="text-shadow">{{ item.year }}</p></li>
-          
-    </div>
-    </ul>
-</div>
-{% endfor %}
+    {% for item in art|reverse %}
+    <a href="{{ url_for('artpiece', id=item._id) }}">
+        <div class="col s12 m6 l3">
+            <ul class="white library">
+                <div class="card-list">
+                    <li>
+                        <figure>
+                            <img src="{{ item.image }}" alt="{{ item.title }}" onerror="this.onerror=null;this.src='{{ url_for('static', filename='images/no_img.png') }}';">
+                        </figure>
+                    </li>
+                    <li><p class="black-text"><small>{{ item.title|truncate(20) }}</small></p></li>
+                    <li><p class="black-text bold"><small>{{ item.author|truncate(20) }}</small></p></li>
+                    <li>
+                        <p class="black-text">
+                            <img src="https://www.countryflags.io/{{ item.country }}/flat/24.png" alt="{{ item.country }}" class="flag">
+                            {{ item.year }}
+                        </p>
+                    </li>
+                </div>
+            </ul>
+        </div>
+    </a>
+    {% endfor %}
+
 </div>
 {% endblock %}
