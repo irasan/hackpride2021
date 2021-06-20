@@ -33,7 +33,7 @@ h1, h2, h3, h4 {
 }
 
 .font-gilbert {
-    font-family: "Gilbert", "Bangers", sans-serif;
+    font-family: "gilbert", "Bangers", sans-serif;
 }
 
 .text-shadow {
@@ -51,11 +51,6 @@ h1, h2, h3, h4 {
 .black-opacity-bg {
     border-radius: 8px;
     background-color: rgba(0, 0, 0, 0.5);
-}
-
-.white-opacity-bg {
-    border-radius: 8px;
-    background-color: rgba(255, 255, 255, 0.5);
 }
 
 
@@ -140,30 +135,40 @@ nav #account-dropdown li:hover {
   right: 0;
   bottom: 60px;
 }
-
-
 /* HOME */
+
 .about {
-    font-size: xx-large;
+    text-align: center;
+    font-size:xx-large;
     font-weight: 900;
-    padding: 1em;
+    max-width: 900px;
+    margin: 0 auto;
 }
 
-
-/* RECOMMEND */
-.recommend .btn-large {
-    border-radius: 8px;
-    margin: 0.5em 1em;
-    width: 75%;
-}
-
-/*CATEGORY*/
-
-.library {
-    padding-bottom: 3px;
-    padding-top: 3px;
+.recommend {    
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-gap: 15px;
+    padding: 20px 20px 150px 20px;
+    background-color: rgba(0, 0, 0, 0.5);
     border-radius: 15px;
 }
+
+.recommend h2 {
+    color:white;
+}
+.recommend .buttons {
+    background-color: white;
+    color: black;
+    padding: 10px 35px;
+    border-radius: 15px;
+    display: inline-block;
+    text-decoration: none;
+    transition: .3s;
+}
+
+
+
 
 /* HR */
 hr.divider { 
@@ -239,6 +244,7 @@ hr.divider::before {
     to {top: 0; opacity: 0;}
 }
 
+
 /* REGISTER */
 #register,
 #login {
@@ -286,6 +292,7 @@ hr.divider::before {
     margin: 0 auto;
     align-self: center;
     justify-items: center;
+    background-color: rgba(0, 0, 0, 0.5);
 }
 
 .card-list li {
@@ -403,10 +410,6 @@ hr.divider::before {
 }
 
 /* FORM */
-.suggestion-form {
-    padding: 3em;
-}
-
 .add-border {
     border: 1px solid #CFEBDF;
 }
@@ -414,27 +417,6 @@ hr.divider::before {
 .add-height {
     height: 200px;
 }
-
- .form-label {
-    color: #000;
-    font-weight: bold;
-}
-
-.suggestion-form .btn-flat {
-    font-family: 'Montserrat', sans-serif !important;
-    font-size: 12px !important;
-    font-weight: bold;
-    text-transform: none;
-    color: #000;
-}
-
-#override-materialize .select-wrapper input.select-dropdown {
-    font-family: 'Montserrat', sans-serif !important;
-    font-size: 12px !important;
-    font-weight: bold;
-    color: #000;
-}
-
 
 /* MEDIA QUERIES */
 @media only screen and (max-width: 370px) {

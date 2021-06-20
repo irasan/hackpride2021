@@ -11,6 +11,10 @@
 {% if favs|length > 0 %}
 
 <!-- favorite books -->
+<div class=row>
+    <div class="col m1 black-opacity-bg">
+        <p>BOOKS</p>
+    </div>
 {% if books|length > 0 %}
 <ul class="row card-list">
     {% for item in books %}
@@ -24,6 +28,7 @@
 <br>
 <hr class="divider"><br>
 {% endif %}
+</div>
 
 <!-- favorite movies -->
 {% if movies|length > 0 %}
