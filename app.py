@@ -271,7 +271,7 @@ def add_art():
                 "image": request.form.get("cover"),
                 "reviews": int(0),
                 "favorites": int(0),
-                "is_approved": True
+                "is_approved": bool(True)
         }
         mongo.db.art.insert_one(art)
         flash("Your Review Was Successfully Added")
@@ -284,6 +284,7 @@ def add_art():
 @is_admin
 def edit_art(id):
     art = mongo.db.art.find_one({"_id": ObjectId(id)})
+    print(art)
     reviews = art["reviews"]
     favorites = art["favorites"]
     categories = list(mongo.db.categories.find().sort("category_name", 1))
@@ -300,7 +301,7 @@ def edit_art(id):
                 "image": request.form.get("cover"),
                 "reviews": reviews,
                 "favorites": favorites,
-                "is_approved": True
+                "is_approved": bool(True)
         }
         mongo.db.art.update({"_id": ObjectId(id)}, art)
         flash("Your Review Was Successfully Edited")
@@ -389,7 +390,9 @@ def suggestions():
                 "summary": request.form.get("summary"),
                 "website": request.form.get("website"),
                 "image": request.form.get("cover"),
-                "is_approved": bool(False)
+                "is_approved": bool(False),
+                "reviews": int(0),
+                "favorites": int(0)
         }
         mongo.db.art.insert_one(suggestion)
         flash("Thank You! Your Suggestion Is Being Reviewed")
