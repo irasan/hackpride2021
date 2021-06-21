@@ -13,16 +13,28 @@
                     <li>
                         <figure>
                             <img src="{{ item.image }}" alt="{{ item.title }}" onerror="this.onerror=null;this.src='{{ url_for('static', filename='images/no_img.png') }}';">
+                            <figcaption>
+                                <p class="white-text text-shadow">CLICK<br><br>TO<br><br>VIEW</p>
+                            </figcaption>
                         </figure>
                     </li>
-                    <li><p class="black-text"><small>{{ item.title|truncate(20) }}</small></p></li>
+                    <li>
+                        <p class="black-text">
+                            <small>
+                                <i class="fas fa-exclamation-triangle yellow-text text-accent-4"></i>
+                                {{ item.title|truncate(20) }}
+                            </small>
+                        </p>
+                    </li>
                     <li><p class="black-text bold"><small>{{ item.author|truncate(20) }}</small></p></li>
                     <li>
                         <p class="black-text">
                             <img src="https://www.countryflags.io/{{ item.country }}/flat/24.png" alt="{{ item.country }}" class="flag">
                             {{ item.year }}
-                            <span class="right"> <i class="fas fa-heart red-text"></i> {{ item.favorites }} 
-                            <i class="fas fa-comment-dots green-text flag"></i> {{ item.reviews }}</span>
+                            <span class="right">
+                                <i class="fas fa-heart red-text"></i> {{ item.favorites }} 
+                                <i class="fas fa-comment-dots green-text flag"></i> {{ item.reviews }}
+                            </span>
                         </p>
                     </li>
                 </div>

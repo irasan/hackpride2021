@@ -9,7 +9,8 @@ $(document).ready(function () {
     $("select").formSelect(); // select dropdowns
     $(".modal").modal(); // modals
     $(".tabs").tabs(); // tabs
-    $('.tooltipped').tooltip(); // tooltip
+    $(".tooltipped").tooltip(); // tooltip
+    $(".collapsible").collapsible(); // collapsibles
 
     // custom flash messages
     function flashToast() {

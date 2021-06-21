@@ -226,8 +226,35 @@ def admin():
     """
     Admin-Only page
     """
-    pending = list(mongo.db.art.find({"is_approved": False}))
-    return render_template("admin.html", pending=pending)
+    art = list(mongo.db.art.find())
+    pending = []
+    for item in art:
+        if item["is_approved"] is False:
+            pending.append(item)
+    users = list(mongo.db.users.find())
+    return render_template("admin.html", art=art, pending=pending, users=users)
+
+
+@app.route("/grant_admin/<id>")
+@login_required
+@is_admin
+def grant_admin(id):
+    """ Grant someone Admin priveledges """
+    mongo.db.users.find_one_and_update(
+        {"_id": ObjectId(id)}, {"$set": {"is_admin": bool(True)}})
+    flash("User Is Now Admin")
+    return redirect(request.referrer)
+
+
+@app.route("/remove_admin/<id>")
+@login_required
+@is_admin
+def remove_admin(id):
+    """ Remove Admin priveledges """
+    mongo.db.users.find_one_and_update(
+        {"_id": ObjectId(id)}, {"$set": {"is_admin": bool(False)}})
+    flash("User Is No Longer Admin")
+    return redirect(request.referrer)
 
 
 @app.route("/approve_art/<id>", methods=["GET", "POST"])
@@ -238,7 +265,7 @@ def approve_art(id):
     Approve a suggestion from the Admin-Page
     """
     mongo.db.art.find_one_and_update(
-        {"_id": ObjectId(id)}, {"$set": {"is_approved": True}})
+        {"_id": ObjectId(id)}, {"$set": {"is_approved": bool(True)}})
     flash("Suggestion Approved")
     return redirect(url_for("admin"))
 
@@ -284,7 +311,6 @@ def add_art():
 @is_admin
 def edit_art(id):
     art = mongo.db.art.find_one({"_id": ObjectId(id)})
-    print(art)
     reviews = art["reviews"]
     favorites = art["favorites"]
     categories = list(mongo.db.categories.find().sort("category_name", 1))
@@ -310,12 +336,31 @@ def edit_art(id):
     return render_template("edit_art.html", art=art, categories=categories)
 
 
+@app.route("/delete_art/<id>", methods=["GET", "POST"])
+@login_required
+@is_admin
+def delete_art(id):
+    mongo.db.art.remove({"_id": ObjectId(id)})
+    flash("Record Successfully Deleted")
+    return redirect(request.referrer)
+
+
 @app.route("/artpiece/<id>", methods=["GET", "POST"])
 def artpiece(id):
     # get the id and display the full page with reviews
     item = mongo.db.art.find_one({"_id": ObjectId(id)})
     reviews = list(mongo.db.reviews.find(
         {"item_id": ObjectId(id)}))
+    in_favs = bool(False)
+    
+    if "user" in session:
+        user = mongo.db.users.find_one(
+            {"username": session["user"].lower()})
+        user_favs = list(user["favorites"])
+        if ObjectId(id) in user_favs:
+            in_favs = bool(True)
+        else:
+            in_favs = bool(False)
 
     if request.method == "POST":
         if "user" in session:
@@ -339,7 +384,8 @@ def artpiece(id):
             flash("Please Log In To Leave A Review")
             return redirect(url_for("login"))
 
-    return render_template("artpiece.html", item=item, reviews=reviews)
+    return render_template(
+        "artpiece.html", item=item, reviews=reviews, in_favs=in_favs)
 
 
 @app.route("/add_favorite/<id>")
@@ -350,7 +396,8 @@ def add_favorite(id):
     mongo.db.users.find_one_and_update(
         {"username": session["user"].lower()},
         {"$push": {"favorites": ObjectId(id)}})
-    mongo.db.art.update_one({"_id": ObjectId(id)},
+    mongo.db.art.update_one(
+        {"_id": ObjectId(id)},
         {"$inc": {"favorites": 1}})
     flash("This Art Piece Has Been Saved To Your Favorites")
     return redirect(request.referrer)
@@ -363,10 +410,11 @@ def remove_favorite(id):
     mongo.db.users.find_one_and_update(
         {"username": session["user"].lower()},
         {"$pull": {"favorites": ObjectId(id)}})
-    mongo.db.art.update_one({"_id": ObjectId(id)},
+    mongo.db.art.update_one(
+        {"_id": ObjectId(id)},
         {"$inc": {"favorites": -1}})
     flash("This Art Piece Has Been Removed From Your Favorites")
-    return redirect(url_for("profile", username=session["user"]))
+    return redirect(request.referrer)
 
 
 @app.route("/category/<category>")

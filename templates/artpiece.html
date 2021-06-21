@@ -5,8 +5,15 @@
 <div class="row white-opacity-bg">
     <div class="col s12">
         {% if session.user %}
-        <a class="right green-text text-darken-1 tooltipped" data-position="bottom" data-tooltip="Save to favorites" href="{{ url_for('add_favorite', id=item._id) }}">
-            <i class="far fa-bookmark fa-5x" id="save-icon"></i></a>
+        {% if in_favs %}
+        <a class="right red-text text-darken-1 tooltipped" data-position="bottom" data-tooltip="Remove Favorite" href="{{ url_for('remove_favorite', id=item._id) }}">
+            <i class="fas fa-bookmark fa-5x save-icon"></i>
+        </a>
+        {% else %}
+        <a class="right green-text text-darken-1 tooltipped" data-position="bottom" data-tooltip="Save Favorite" href="{{ url_for('add_favorite', id=item._id) }}">
+            <i class="far fa-bookmark fa-5x save-icon"></i>
+        </a>
+        {% endif %}
         {% endif %}
         <h2 class="header">{{ item.title|capitalize }}</h2>
         <h5>by {{ item.author|title }}</h5>

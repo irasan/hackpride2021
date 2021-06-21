@@ -553,7 +553,7 @@ hr.divider::before {
     border-radius: 8px;
 }
 
-#save-icon {
+.save-icon {
     padding: 10px;
 }
 
