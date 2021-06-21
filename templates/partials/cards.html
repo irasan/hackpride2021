@@ -4,7 +4,7 @@
             <img src="{{ item.image }}" alt="{{ item.title }}" onerror="this.onerror=null;this.src='{{ url_for('static', filename='images/no_img.png') }}';">
             <figcaption>
                 <p class="white-text text-shadow">{{ item.author|truncate(20) }}</p>
-                <p>{{ item.year }}</p>
+                <p class="white-text text-shadow">{{ item.year }}</p>
             </figcaption>
         </figure>
     </a>

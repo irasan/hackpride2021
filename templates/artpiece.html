@@ -21,13 +21,17 @@
                 </div>
                 <div class="card-stacked">
                     <div class="card-content">
-                        <p class="bold text-shadow">{{ item.year }} &middot; {{ item.country }} <span
-                                class="right red-text tooltipped" data-position="top" data-tooltip="Explicit content">
-                                <i class="fas fa-exclamation-circle fa-lg"></i></span></p>
+                        <p class="bold">
+                            <img src="https://www.countryflags.io/{{ item.country }}/flat/24.png" alt="{{ item.country }}" class="flag">
+                            {{ item.year }}
+                            <span class="right red-text tooltipped" data-position="top" data-tooltip="Explicit content">
+                                <i class="fas fa-exclamation-circle fa-lg"></i>
+                            </span>
+                        </p>
                         <p>{{ item.summary }}</p>
                     </div>
                     <div class="card-action">
-                        <a class="purple-text text-accent-2" href="{{ item.website }}" target="_blank">VIEW ONLINE</a>
+                        <a class="purple-text text-accent-2 bold" href="{{ item.website }}" target="_blank">VIEW ONLINE</a>
                     </div>
                 </div>
             </div>
@@ -47,7 +51,7 @@
             </div>
             {% endfor %}
             {% else %}
-            <h5>There's no reviews yet. Be the first one to share your thoughts!</h5>
+            <h5>There are no reviews yet.<br>Be the first one to share your thoughts!</h5>
             {% endif %}
             {% if session.user %}
             <span ><a class="btn-large amber lighten-1 black-text bold text-shadow hoverable modal-trigger"

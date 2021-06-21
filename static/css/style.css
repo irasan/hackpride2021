@@ -417,6 +417,7 @@ hr.divider::before {
     margin: 0 auto;
     width: 100%;
     height: 250px;
+    line-height: 250px;
     -webkit-perspective: 50em;
             perspective: 50em;
     border-radius: 8px;
@@ -425,10 +426,6 @@ hr.divider::before {
     -webkit-transition: all 0.3s ease-in-out;
     -o-transition: all 0.3s ease-in-out;
     transition: all 0.3s ease-in-out;
-}
-
-.card-list li figure p {
-    line-height: unset;
 }
 
 .card-list li figure img {
@@ -454,11 +451,12 @@ hr.divider::before {
 }
 
 .card-list li figure figcaption p {
-    font-size: 2em;
+    font-size: 1.5em;
     font-weight: bolder;
     width: 90%;
     text-align: center;
     margin: 0 auto;
+    overflow-wrap: break-word;
 }
 
 .card-list li figure::after {
@@ -526,7 +524,8 @@ hr.divider::before {
     opacity: 0.9;
 }
 
-.card-list .flag {
+.card-list .flag,
+.card-stacked .flag {
     vertical-align: middle;
 }
 
