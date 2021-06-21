@@ -1,59 +1,180 @@
-![CI logo](https://codeinstitute.s3.amazonaws.com/fullstack/ci_logo_small.png)
+[logo](static/images/readme/proud-unicorns.png)
 
-Welcome Tim Nelson,
+We are a group of coders, Ana, Iryna, Scott, and Tim - who represent team called Proud Unicorns in the #proud-coders hackathon, 
+organised by Code Institute in June 2021. 
 
-This is the Code Institute student template for Gitpod. We have preinstalled all of the tools you need to get started. You can safely delete this README.md file, or change it for your own project. Please do read it at least once, though! It contains some important information about Gitpod and the extensions we use.
+We created this awesome collaborative library that shares and celebrates creative production made by, for, and about the LGBTQ+
+community. We believe representation is a powerful tool to shaping an artistic scene that is diverse, inclusive, and colourful!
 
-## Gitpod Reminders
+Click [here](https://hackpride2021.herokuapp.com/) to view the live website.
 
-To run a frontend (HTML, CSS, Javascript only) application in Gitpod, in the terminal, type:
 
-`python3 -m http.server`
+## Wireframes
 
-A blue button should appear to click: _Make Public_,
+In order to have some basic structure in place and to be on the same page, we created [wireframes](https://github.com/irasan/hackpride2021/tree/master/static/wireframes) 
+and were working from these when creating our project.
 
-Another blue button should appear to click: _Open Browser_.
+   
+## UX
+### User stories
 
-To run a backend Python file, type `python3 app.py`, if your Python file is named `app.py` of course.
+1.  User wants to see collections of books, art, movies, music, and podcasts and easily navigate between them.
+1.  User wants to save art pieces to a list of favorites and be able to see it later.
+1.  User wants to read reviews about art pieces written by other users.
+1.  User wants to write reviews about art pieces they saw/heard/read etc.
+1.  User wants to contribute to the collections by suggesting new art pieces.
 
-A blue button should appear to click: _Make Public_,
+## Design features
+The following design choices were made in order to implement the game: 
 
-Another blue button should appear to click: _Open Browser_.
+#### Fonts
+We wanted to use Gilbert colorful font for our headings, but at the moment only black version is available. So we used it instead
+adding colors manually to each letter in logo. 
+[Montserrat](https://fonts.google.com/specimen/Montserrat?query=mont) was chosen as our main font for the website because it's 
+nicely paired with Gilbert font, is very easy to read, and looks nice on any screen.
 
-In Gitpod you have superuser security privileges by default. Therefore you do not need to use the `sudo` (superuser do) command in the bash terminal in any of the lessons.
+#### Icons
+All icons were chosen for their obvious meaning so that they can be easily understood by everyone. They were implemented 
+using [Font Awesome.](https://fontawesome.com/)
 
-To log into the Heroku toolbelt CLI:
+#### Colors
+Color palette for this project resembles LGBTQ flag. Besides a flag picture is used throughout the website as a background.
+During implementation, in order to simplify it, all colors were picked from those available on [Materialize.](https://materializecss.com/color.html), 
+but closely matching the palette.
 
-1. Log in to your Heroku account and go to *Account Settings* in the menu under your avatar.
-2. Scroll down to the *API Key* and click *Reveal*
-3. Copy the key
-4. In Gitpod, from the terminal, run `heroku_config`
-5. Paste in your API key when asked
+Design of the website in general is cheerful and bright in order to highlight it's purpose and audience.
 
-You can now use the `heroku` CLI program - try running `heroku apps` to confirm it works. This API key is unique and private to you so do not share it. If you accidently make it public then you can create a new one with _Regenerate API Key_.
 
-## Updates Since The Instructional Video
+## Technologies Used
 
-We continually tweak and adjust this template to help give you the best experience. Here is the version history:
+* [HTML](https://www.w3schools.com/html/) or Hypertext markup language. HTML is used to create the structure of web pages. 
+It consists of tags which tell the browser how to set out text and images on the page. Hypertext is the method by which you move 
+around on the web, markups are the tags which set out the structure of the webpage, thus HTML is a language for web creation with 
+its own structure and syntax. The data in the tags is read by the web browser enabling you to create any web page you like. In 
+this project my templates are all written in HTML. There is a template for home page, collections of art in each category, individual
+peices of art together with their reviews. Besides templates for login, registration and user profile were created, as well as 
+a separate template for admin users where they can add, approve and edit new art pieces. The base template sets out the way in 
+which the website should look (navbar, footer, etc) and information from this is used in each of the other templates.
 
-**May 10 2021:** Added `heroku_config` script to allow Heroku API key to be stored as an environment variable.
+* [CSS](https://www.w3schools.com/Css/) stands for Cascading Style sheets which is a type of style language which sets out how the webpage 
+should be styled. It allows the user to style the webpage in a particular way, making the UX richer and more meaningful for the user.
 
-**April 7 2021:** Upgraded the template for VS Code instead of Theia.
+* [Materialize] (https://materializecss.com/) is a CSS framework used for responsive websites. It was used throughout the website for 
+  quick and easy styling. In particular, forms and cards that display art pieces were taken from there.
 
-**October 21 2020:** Versions of the HTMLHint, Prettier, Bootstrap4 CDN and Auto Close extensions updated. The Python extension needs to stay the same version for now.
+* [JavaScript](https://www.javascript.com/) was used for implementing functions that support some components on the website, like modals,
+tooltips, navigation, and our beautiful preloader.
 
-**October 08 2020:** Additional large Gitpod files (`core.mongo*` and `core.python*`) are now hidden in the Explorer, and have been added to the `.gitignore` by default.
+* [jquery](https://jquery.com/) is used to simplify DOM manipulation. Jquery is a javascript library that is used to provide interactivity 
+on websites. The $ sign signals to the browser that jquery is being used.
 
-**September 22 2020:** Gitpod occasionally creates large `core.Microsoft` files. These are now hidden in the Explorer. A `.gitignore` file has been created to make sure these files will not be committed, along with other common files.
+* [Python](https://www.python.org/psf-landing/) is a high level programming language used for apps in many frameworks such as flask, 
+pyramid and django. Python supports many programming paradigms and is object orientated and has a comprehensive set of libraries. 
+The version of Python I used in my app is 3.7.
 
-**April 16 2020:** The template now automatically installs MySQL instead of relying on the Gitpod MySQL image. The message about a Python linter not being installed has been dealt with, and the set-up files are now hidden in the Gitpod file explorer.
+* [Flask](https://flask.palletsprojects.com/en/1.1.x/) is a micro framework used to build web applications. Flask has a small and easily 
+extendable core which gives the developer control over which databases and other third party resources to use when developing an app.
 
-**April 13 2020:** Added the _Prettier_ code beautifier extension instead of the code formatter built-in to Gitpod.
+* [Heroku](https://www.heroku.com/) is a cloud platform that allows a developer to build, deliver, scale and monitor apps. Heroku makes 
+the experience of deploying an app relatively straightforward.
 
-**February 2020:** The initialisation files now _do not_ auto-delete. They will remain in your project. You can safely ignore them. They just make sure that your workspace is configured correctly each time you open it. It will also prevent the Gitpod configuration popup from appearing.
+* We used [Chrome Developer Tools](https://developers.google.com/web/tools/chrome-devtools/) to work on the code. Chrome dev tools are 
+a set of tools designed to give the developer tools to amend code in a testing environment in order to enhance the UX and functionality 
+experience. We were also able to test the responsiveness of the app using these tools.
 
-**December 2019:** Added Eventyret's Bootstrap 4 extension. Type `!bscdn` in a HTML file to add the Bootstrap boilerplate. Check out the <a href="https://github.com/Eventyret/vscode-bcdn" target="_blank">README.md file at the official repo</a> for more options.
+* We used [vscode](https://code.visualstudio.com/) and gitpod [gitpod](https://www.gitpod.io/) as our coding editors.  Lots of extensions 
+were available to check the syntax of the code.
 
----
 
-Happy coding!
+## Information Architecture
+### Database Choice
+MongoDB was chosen for storing data for this project. It's NoSQL document-based database that allows quick and easy search and 
+lots of other fucntionality.
+
+### Collections Data Structure
+This website relies on 4 different collections that store information about users, art, art categories, and reviews. 
+
+Users collection:
+For users registration and login, Users collection is used. It also stores information about users saved favorites and reviews as 
+well as a boolean regarding their status as admin.
+Username reference is also added automatically to each review that is being created.
+![users collection](https://github.com/irasan/hackpride2021/tree/master/static/images/readme/db-user.png)
+
+Art collection:
+Each art piece besides traditional values like title, author, year, country, summary, is_explicit, image, and website, also 
+has values for number of reviews, number how many times it was favorited, and a boolean for whether it was approved by admins.
+The reason behind this was to avoid creating another collection for art suggestions from users. The code works in the way that each
+suggested art pieces is stored in the art collection, however it is not displayed on the website until it's approved by admins.
+![books collection](https://github.com/irasan/hackpride2021/tree/master/static/images/readme/db-art.png)
+
+Reviews collection:
+This collection stores references to art id, users who created the review, and date when it was added.
+![reviews collection](https://github.com/irasan/hackpride2021/tree/master/static/images/readme/db-review.png)
+
+Categories collection:
+A list fo all art categories stored in a separate collection in order to do quick calls for display in html templates. 
+![categories collection](https://github.com/irasan/hackpride2021/tree/master/static/images/readme/db-category.png)
+
+
+## Testing
+
+We tested each part of our user stories to check it worked as expected.
+
+* The navbar must appear on every page so that the user can easily navigate between pages. Tested and works as expected.
+
+* The navbar has the title of of the website, "The Rainbow Collection" on the left hand side. If a user clicks on this 
+they are taken to the Home page. Tested and works as expected.
+
+* The home page shows the following items in the navbar: "The Rainbow Collection", "Home", "Account". The latest shows a 
+dropdown list for "Login" and "Register". Tested and works as expected.
+
+* Underneath the main navbar there is a list of art categories. Upon clicking on eah tab, the user is directed to a page
+with all art in that category. Tested and works as expected.
+
+* The home page shows the following items in the navbar for logged in users: "The Rainbow Collection", "Make a suggest", 
+"Home", "Account". Account tab will show a dropdown menu with "Profile", "Log out", and "Admin" if user is logged in as admin.
+Tested and works as expected.
+
+* A logged out user can see all the art in categories and on their individual pages. Tested and works as expected.
+
+* User can press "View a random" category button on the Home page and see a randomly picked piece of art in that category.
+Tested and works as expected.
+
+* Once the form for art suggestions is filled in by a user, it appeares in the database and admins page. Tested and works as expected.
+
+* User can register and log into the site. Tested and works as expected.
+
+* Registered user can add a review. Tested and works as expected.
+
+* Registered user can save art piece to favorites and see them displayed in their profiles. Tested and works as expected.
+
+* Registered user can remove saved art pieces from favorites. Tested and works as expected.
+
+* The app responds when screen size is reduced. 
+
+
+## Deployment
+
+The following section describes the process we undertook to deploy this project to Heroku.
+
+1. We logged in to Heroku, using 'heroku login' command. Input Heroku login details.
+2. We then created a new Heroku app.
+3. We pushed our project to github and enabled automatic link to heroku.  This took some time to set up as we had 
+to make sure that my environmental variables were correct.
+4. We then logged into Heroku and selected newly created app.
+5. We entered all environment settings into the heroku config variables including: IP, PORT, Database name, Database URI, 
+and Secret key as shown below.
+
+* IP                 xxxxx
+* MONGO_DBNAME       xxxxx
+* MONGO_URI          xxxxx
+* PORT               xxxxx
+* SECRET_KEY         xxxxxxxxx
+
+
+We then checked that the app was now deployed via Heroku
+
+
+## Credits
+### Media  
+Images for this project were 
