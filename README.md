@@ -1,4 +1,4 @@
-[logo](static/images/readme/proud-unicorns.png)
+![logo](static/images/readme/proud-unicorns.png)
 
 We are a group of coders, Ana, Iryna, Scott, and Tim - who represent team called Proud Unicorns in the #proud-coders hackathon, 
 organised by Code Institute in June 2021. 
@@ -98,22 +98,22 @@ Users collection:
 For users registration and login, Users collection is used. It also stores information about users saved favorites and reviews as 
 well as a boolean regarding their status as admin.
 Username reference is also added automatically to each review that is being created.
-![users collection](https://github.com/irasan/hackpride2021/tree/master/static/images/readme/db-user.png)
+![users collection](static/images/readme/db-user.png)
 
 Art collection:
 Each art piece besides traditional values like title, author, year, country, summary, is_explicit, image, and website, also 
 has values for number of reviews, number how many times it was favorited, and a boolean for whether it was approved by admins.
 The reason behind this was to avoid creating another collection for art suggestions from users. The code works in the way that each
 suggested art pieces is stored in the art collection, however it is not displayed on the website until it's approved by admins.
-![books collection](https://github.com/irasan/hackpride2021/tree/master/static/images/readme/db-art.png)
+![books collection](static/images/readme/db-art.png)
 
 Reviews collection:
 This collection stores references to art id, users who created the review, and date when it was added.
-![reviews collection](https://github.com/irasan/hackpride2021/tree/master/static/images/readme/db-review.png)
+![reviews collection](static/images/readme/db-review.png)
 
 Categories collection:
 A list fo all art categories stored in a separate collection in order to do quick calls for display in html templates. 
-![categories collection](https://github.com/irasan/hackpride2021/tree/master/static/images/readme/db-category.png)
+![categories collection](static/images/readme/db-category.png)
 
 
 ## Testing
@@ -171,10 +171,10 @@ and Secret key as shown below.
 * PORT               xxxxx
 * SECRET_KEY         xxxxxxxxx
 
-
 We then checked that the app was now deployed via Heroku
 
 
 ## Credits
 ### Media  
-Images for this project were 
+Background image was taken from [Canva](https://www.canva.com/q/pro/?v=2&utm_source=google_sem&utm_medium=cpc&utm_campaign=REV_UK_EN_CanvaPro_Branded_Tier1_Core_EM&utm_term=REV_UK_EN_CanvaPro_Branded_Tier1_Canva_EM&utm_content=1712_control&gclsrc=aw.ds&&gclid=CjwKCAjw8cCGBhB6EiwAgORey53dOUQZKRkevJcsbW2gFx9AabXNZy69DDhm-zWN23voZKEK3bRFwxoCza4QAvD_BwE)
+Images for art pieces were mostly taken from the relevant websites where they were listed or described.

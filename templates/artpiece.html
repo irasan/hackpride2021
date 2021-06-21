@@ -24,9 +24,11 @@
                         <p class="bold">
                             <img src="https://www.countryflags.io/{{ item.country }}/flat/24.png" alt="{{ item.country }}" class="flag">
                             {{ item.year }}
+                            {% if item.is_explicit == "True" or item.is_explicit == True %}
                             <span class="right red-text tooltipped" data-position="top" data-tooltip="Explicit content">
                                 <i class="fas fa-exclamation-circle fa-lg"></i>
                             </span>
+                            {% endif %}
                         </p>
                         <p>{{ item.summary }}</p>
                     </div>
