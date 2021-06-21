@@ -208,7 +208,7 @@ nav #account-dropdown li:hover {
 
 /* HOME */
 .about {
-    font-size: xx-large;
+    font-size: 2em;
     font-weight: 900;
     padding: 1em;
 }
@@ -529,6 +529,10 @@ hr.divider::before {
     vertical-align: middle;
 }
 
+.library .card-list li p span.right {
+    vertical-align: middle;
+    line-height: 1.6;
+}
 
 /* REVIEWS */
 .review-bubble {
@@ -544,12 +548,24 @@ hr.divider::before {
     border-radius: 8px;
 }
 
-.save-favorites .btn {
-    margin-bottom: 1em;
+.card.horizontal .card-image img {
+    margin: 10px;
+    border-radius: 8px;
 }
 
 #save-icon {
     padding: 10px;
+}
+
+.card-stacked {
+    display: inline-block;
+}
+
+.card .card-content {
+    padding: 15px 25px !important;
+}
+.card-action {
+padding: 5px 25px !important;
 }
 
 
